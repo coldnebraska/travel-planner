@@ -3,12 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Project 1</title>
+    <title>Travel Planner</title>
+    <link rel="stylesheet" type="text/css" href="./assests/css/style.css">
 </head>
+
 <body>
-    <section></section>
-    
+    <header>
+        <h1>Travel Planner</h1>
+    </header>
+
+    <figure></figure>
+
+    <main>
+        <section class="search-form">
+            <h2>Plan Your Trip</h2>
+            <form id="travel-form">
+                <div class="form-group">
+                    <label for="outgoing">Outgoing Location:</label>
+                    <input type="text" id="outgoing" name="outgoing" required>
+                </div>
+                <div class="form-group">
+                    <label for="outgoing-date">Outgoing Date:</label>
+                    <input type="date" id="outgoing-date" name="outgoing-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="destination">Destination:</label>
+                    <input type="text" id="destination" name="destination" required>
+                </div>
+                <div class="form-group">
+                    <label for="return-date">Return Date:</label>
+                    <input type="date" id="return-date" name="return-date">
+                </div>
+                <div class="form-group">
+                    <label for="passengers">Number of Passengers:</label>
+                    <input type="number" id="passengers" name="passengers" min="1" required>
+                </div>
+                <button type="button" id="toggle-return-date">Add/Remove Return Date</button>
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Travel Planner</p>
+    </footer>
+
+    <script>
+        const toggleReturnDateButton = document.getElementById("toggle-return-date");
+        const returnDateInput = document.getElementById("return-date");
+
+        toggleReturnDateButton.addEventListener("click", function () {
+            if (returnDateInput.style.display === "none" || returnDateInput.style.display === "") {
+                returnDateInput.style.display = "block";
+            } else {
+                returnDateInput.style.display = "none";
+            }
+        });
+    </script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
