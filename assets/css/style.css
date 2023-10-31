@@ -28,10 +28,7 @@ header {
 main {
     max-width: 960px;
     margin: 7% auto;
-    padding: 1rem;
-    background-color: #393183; 
     margin-bottom: 7rem;
-    border: 1px solid #5b4cd0; 
     border-radius: 5px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
     flex-grow: 1;
@@ -127,4 +124,4 @@ footer {
 
 
 
-/* Rest of your CSS remains the same */
+
