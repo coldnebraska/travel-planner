@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <title>Travel Planner</title>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-
     <link rel="stylesheet" type="text/css" href="./assests/css/style.css">
 </head>
 
 <body>
-    <header>
-        <h1>Travel Planner</h1>
-    </header>
+    <div class="wrapper">
+        <header>
+            <h1>Plan your trip today!</h1>
+        </header>
 
-    <figure></figure>
+        <section class="hero">
+            <img src="./assets/bgimage.jpg">
+        </section>
 
     <main>
         <section class="search-form">
             <h2>Plan Your Trip</h2>
             <form id="travel-form">
-                <div  class="form-group">
+                <div class="form-group">
                     <label for="outgoing">Outgoing Location:</label>
                     <input type="text" id="outgoing" name="outgoing" required>
                 </div>
@@ -41,7 +43,7 @@
                     <input type="number" id="passengers" name="passengers" min="1" required>
                 </div>
                 <button type="button" id="toggle-return-date">Add/Remove Return Date</button>
-                <button type="submit" id = "search" class="search-button">Search</button>
+                <button type="submit" class="search-button">Search</button>
             </form>
         </section>
     </main>
@@ -51,6 +53,7 @@
     </footer>
 
     <script>
+        // Toggles round trip information
         const toggleReturnDateButton = document.getElementById("toggle-return-date");
         const returnDateInput = document.getElementById("return-date");
 
