@@ -1,11 +1,38 @@
 let token = ""
 const hotel = {
-  city: "AUS", //user input 
-  userRadius: 10 - 1, //user input
+  iata: [],
   name: [],
   radius: [], 
   rating: []
 }
+const userInput = {
+  city: "austin",
+  region: "texas",
+  radius: 10 - 1
+}
+
+function searchIataCode() {
+  const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
+  fetch (requestUrl, {
+    method: "GET",
+    headers: {"X-Api-Key": "y+Klmvc+pjWsfHoKkI2OSA==h5DjimMBO5bvqGQp"}
+  })
+  .then(function (response) {
+    return response.json()
+  })
+  .then(function (data) {
+    console.log(data)
+    for (i = 0; i < data.length; i++) {
+      if (data[i].iata != "") {
+        hotel.iata.push(data[i].iata)
+      }
+    }
+    console.log(hotel.iata)
+    getHotelToken()
+  })
+}
+
+searchIataCode()
 
 function getHotelToken () {
     const requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
@@ -22,7 +49,7 @@ function getHotelToken () {
         token = data.access_token
       })
       .then(function () {
-        const requestUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + hotel.city + "&radius=" + hotel.userRadius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
+        const requestUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + hotel.iata + "&radius=" + userInput.radius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
         fetch(requestUrl, {
             method: "GET",
             headers: {'Authorization': 'Bearer ' + token}
@@ -37,7 +64,7 @@ function getHotelToken () {
         })
 
       .then( function () {
-        const requestUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=AUS&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
+        const requestUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + hotel.iata + "&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
         fetch(requestUrl, {
             method: "GET",
             headers: {'Authorization': 'Bearer ' + token}
@@ -94,5 +121,3 @@ function createHotelList(data) {
     hotelList.children().eq(i).append(createStar)
   }
 } 
-
-getHotelToken()
