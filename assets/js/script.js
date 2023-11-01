@@ -46,13 +46,13 @@ function getHotelToken () {
             return response.json()
         })
         .then(function(data){
-            // console.log(data)
+            console.log(data)
         })
       })
     }
 
 function createHotelList(data) {
-  const hotelList = $("#hotel-list")
+  const hotelList = $("#hotel-list") // !jquery to the hotel list div
   
   for (i = 0; i < data.data.length; i++) {
     const createDiv = document.createElement("div")
