@@ -1,14 +1,14 @@
 let token = ""
-let hotel = {
+const hotel = {
   city: "AUS", //user input 
-  userRadius: 5, //user input
+  userRadius: 10 - 1, //user input
   name: [],
   radius: [], 
   rating: []
 }
 
 function getHotelToken () {
-    let requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
+    const requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
     fetch(requestTokenURL, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -22,7 +22,7 @@ function getHotelToken () {
         token = data.access_token
       })
       .then(function () {
-        let requestUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + hotel.city + "&radius=" + hotel.userRadius
+        const requestUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + hotel.city + "&radius=" + hotel.userRadius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
         fetch(requestUrl, {
             method: "GET",
             headers: {'Authorization': 'Bearer ' + token}
@@ -32,17 +32,12 @@ function getHotelToken () {
         })
         .then(function(data){
             console.log(data)
-            for (i = 0; i < data.meta.count; i++) {
-              hotel.name.push(data.data[i].name)
-              hotel.radius.push(data.data[i].distance.value + " KM")
-              hotel.rating.push(data.data[i].rating + " Stars")
-            }
-            console.log(hotel)
+            createHotelList(data)
+          })
         })
-      })
 
-      .then(function () {
-        let requestUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=AUS&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
+      .then( function () {
+        const requestUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=AUS&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
         fetch(requestUrl, {
             method: "GET",
             headers: {'Authorization': 'Bearer ' + token}
@@ -51,9 +46,53 @@ function getHotelToken () {
             return response.json()
         })
         .then(function(data){
-            console.log(data)
+            // console.log(data)
         })
       })
     }
+
+function createHotelList(data) {
+  const hotelList = $("#hotel-list")
+  
+  for (i = 0; i < data.data.length; i++) {
+    const createDiv = document.createElement("div")
+    const createHeader = document.createElement("h1")
+    const createPara = document.createElement("p")
+    const createStar = document.createElement("p")
+
+    // create a hotel div for each returned hotel
+    createDiv.setAttribute("class", "hotel")
+    createDiv.setAttribute("hotelID", data.data[i].hotelId)
+    hotelList.append(createDiv)
+    
+    // add rating stars
+    let ratingString = ""
+    let x = 0
+    while (x < data.data[i].rating) {
+      ratingString += "★"
+      x++
+    }
+    
+    if (x < 5) {
+      while (x < 5) {
+        ratingString += "☆"
+        x++
+      }
+    }
+    
+    // add each hotel value to its respective key
+    hotel.name.push(data.data[i].name)
+    hotel.radius.push(data.data[i].distance.value + " Mi") 
+    hotel.rating.push(ratingString + " Stars")
+    
+    // append each hotel element to a hotel div
+    createHeader.textContent = hotel.name[i]
+    hotelList.children().eq(i).append(createHeader)
+    createPara.textContent = hotel.radius[i]
+    hotelList.children().eq(i).append(createPara)
+    createStar.textContent = hotel.rating[i]
+    hotelList.children().eq(i).append(createStar)
+  }
+} 
 
 getHotelToken()
