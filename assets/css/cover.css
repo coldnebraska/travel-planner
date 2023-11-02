@@ -1,0 +1,4 @@
+/* Add this to your CSS */
+body {
+    transition: transform 0.5s ease;
+}
