@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Planner</title>
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./assets/css/flight.css">
 </head>
 
 <body>
     <div class="wrapper">
         <header>
-            <h1>Plan your trip today!</h1>
+            <h1 class="text-3xl font-bold">Plan your trip today!</h1>
         </header>
 
         <section class="hero">
@@ -48,23 +49,35 @@
         </main>
     </div>  
 
+    <div class="card">
+        <h3 class="card-header text-uppercase text-center font-bold flex justify-center items-center h-20"> Flight Results </h3>
+        <div id="search-results" class="card-body">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Departure</th>
+                        <th class="px-4 py-2">Arrival</th>
+                        <th class="px-4 py-2">Return</th>
+                        <th class="px-4 py-2">Return Arrival</th>
+                        <th class="px-4 py-2">Airline</th>
+                        <th class="px-4 py-2">Cost</th>
+                        <th class="px-4 py-2">Passengers</th>
+                        <th class="px-4 py-2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- display flight results here once api is complete -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+         
+    </div>    
     <footer>
         <p>&copy; 2023 Travel Planner</p>
     </footer>
 
-    <script>
-        // Toggles round trip information
-        const toggleReturnDateButton = document.getElementById("toggle-return-date");
-        const returnDateInput = document.getElementById("return-date");
-
-        toggleReturnDateButton.addEventListener("click", function () {
-            if (returnDateInput.style.display === "none" || returnDateInput.style.display === "") {
-                returnDateInput.style.display = "block";
-            } else {
-                returnDateInput.style.display = "none";
-            }
-        });
-    </script>
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/flight.js"></script>
 </body>
 </html>
