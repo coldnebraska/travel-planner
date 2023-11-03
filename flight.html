@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./assets/css/flight.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Plan your trip today!</h1>
+        </header>
+
+        <section class="hero">
+            <img src="./assets/images/bgimage.jpg">
+        </section>
+
+        <main>
+            <section class="search-form">
+                <h2>Search Flights</h2>
+                <form id="travel-form">
+                    <div class="form-group">
+                        <label for="outgoing">Outgoing Location:</label>
+                        <input type="text" id="outgoing" name="outgoing" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="outgoing-date">Outgoing Date:</label>
+                        <input type="date" id="outgoing-date" name="outgoing-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destination:</label>
+                        <input type="text" id="destination" name="destination" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-date">Return Date:</label>
+                        <input type="date" id="return-date" name="return-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="passengers">Number of Passengers:</label>
+                        <input type="number" id="passengers" name="passengers" min="1" required>
+                    </div>
+                    <button type="button" id="toggle-return-date">Add/Remove Return Date</button>
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+            </section>
+        </main>
+    </div>  
+
+    <div class="card shadow-md">
+        <h3 class="card-header text-uppercase text-center font-bold flex justify-center h-20"> Flight Results </h3>
+        <div id="search-results" class="card-body">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr class="options">
+                        <th class="px-4 py-2">Departure</th>
+                        <th class="px-4 py-2">Arrival</th>
+                        <th class="px-4 py-2">Return</th>
+                        <th class="px-4 py-2">Return Arrival</th>
+                        <th class="px-4 py-2">Airline</th>
+                        <th class="px-4 py-2">Cost</th>
+                        <th class="px-4 py-2">Passengers</th>
+                        <th id="button" class="px-0 py-0">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- display flight results here once api is complete -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+         
+    </div>    
+
+
+
+    <footer>
+        <p>&copy; 2023 Travel Planner</p>
+    </footer>
+
+    <script>
+        // Toggles round trip information
+        const toggleReturnDateButton = document.getElementById("toggle-return-date");
+        const returnDateInput = document.getElementById("return-date");
+
+        toggleReturnDateButton.addEventListener("click", function () {
+            if (returnDateInput.style.display === "none" || returnDateInput.style.display === "") {
+                returnDateInput.style.display = "block";
+            } else {
+                returnDateInput.style.display = "none";
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
