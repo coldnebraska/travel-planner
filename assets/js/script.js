@@ -1,7 +1,8 @@
 let token = ""
 let button = ""
 const hotel = {
-  iata: [],
+  outgoingIata: [],
+  destinationIata: [],
   name: [],
   radius: [],
   rating: []
@@ -21,9 +22,9 @@ function searchIataCode() {
   $(".error-msg").css("display", "none")
   hotel.iata = []
   userInput.city = $("#outgoing-city")[0].value
-  userInput.state = $("#outgoing-state")[0].value
+  userInput.region = $("#outgoing-state")[0].value
 
-  console.log(userInput)
+  // console.log(userInput)
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
   fetch(requestUrl, {
     method: "GET",
@@ -33,14 +34,13 @@ function searchIataCode() {
       return response.json()
     })
     .then(function (data) {
-      console.log(data)
+      // console.log(data)
       for (i = 0; i < data.length; i++) {
         if (data[i].iata != "") {
-          hotel.iata.push(data[i].iata)
+          hotel.outgoingIata.push(data[i].iata)
         }
       }
-      console.log(hotel.iata)
-      getHotelToken()
+      // console.log(hotel.outgoingIata)
       searchDestinationIataCode()
     })
 }
@@ -49,9 +49,9 @@ function searchDestinationIataCode() {
   $(".error-msg").css("display", "none")
   hotel.iata = []
   userInput.city = $("#destination-city")[0].value
-  userInput.state = $("#destination-state")[0].value
+  userInput.region = $("#destination-state")[0].value
 
-  console.log(userInput)
+  // console.log(userInput)
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
   fetch(requestUrl, {
     method: "GET",
@@ -61,13 +61,15 @@ function searchDestinationIataCode() {
       return response.json()
     })
     .then(function (data) {
-      console.log(data)
+      // console.log(data)
       for (i = 0; i < data.length; i++) {
         if (data[i].iata != "") {
-          hotel.iata.push(data[i].iata)
+          hotel.destinationIata.push(data[i].iata)
         }
       }
       console.log(hotel.iata)
+      console.log(hotel.destinationIata)
+      getHotelToken()
     })
 }
 
@@ -100,13 +102,13 @@ function getHotelToken() {
     })
     .then(function (data) {
       token = data.access_token
-      flightSearch()
       hotelSearch()
+      flightSearch()
     })
 }
 
 function hotelSearch() {
-  let iataCode = hotel.iata[index]
+  let iataCode = hotel.destinationIata[index]
   const hotelUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + iataCode + "&radius=" + userInput.radius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
   fetch(hotelUrl, {
     method: "GET",
@@ -130,12 +132,19 @@ function hotelSearch() {
 }
 
 function flightSearch() {
-  iataCode = hotel.iata[index]
+  iataCode = hotel.outgoingIata[index]
+  console.log(iataCode)
   const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
   fetch(flightUrl, {
     method: "GET",
     headers: { 'Authorization': 'Bearer ' + token }
   })
+    .catch(error => {
+      if (iataCode != undefined) {
+        index += 1
+        flightSearch()
+      }
+    })
     .then(function (response) {
       return response.json()
     })
@@ -166,12 +175,12 @@ function flightSearch() {
 
         flights.departTime.push(data.data[i].itineraries[0].segments[0].departure.at)
         flights.arrivalTime.push(data.data[i].itineraries[0].segments[0].arrival.at)
-        flights.returnDepartTime.push(data.data[i].itineraries[1].segments[0].departure.at)
-        flights.returnArrivalTime.push(data.data[i].itineraries[1].segments[0].arrival.at)
+        flights.returnDepartTime.push(data.data[i].itineraries[0].segments[0].departure.at)
+        flights.returnArrivalTime.push(data.data[i].itineraries[0].segments[0].arrival.at)
         flights.departAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
-        flights.returnAirline.push(data.data[i].itineraries[1].segments[0].carrierCode)
+        flights.returnAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
         flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
-        flights.returnFlightNumber.push(data.data[i].itineraries[1].segments[0].number)
+        flights.returnFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
         flights.cost.push(data.data[i].price.total)
         flights.numPassengers.push(data.data[i].travelerPricings.length)
 
@@ -208,16 +217,10 @@ function flightSearch() {
         console.log(savedItems)
       })
     })
-    .catch(error => {
-      if (iataCode != undefined) {
-        index += 1
-        hotelSearch()
-      }
-    })
 
 
   function hideButton(id) {
-    const hotelList = $(".options")
+    const flightSave = $(".options")
     const createPara = document.createElement("p")
 
     document.getElementById(id).style.display = "none"
@@ -226,7 +229,7 @@ function flightSearch() {
     flightSave.children().eq(id).append(createPara)
     $(".saved").css("font-style", "italic")
 
-    localStorage.setItem("savedTrips", JSON.stringify(savedItems))
+    localStorage.setItem("savedFlights", JSON.stringify(savedItems))
   }
 
 }
@@ -305,9 +308,9 @@ function changeTimeDisplay() {
   let year = date[0]
   let newDate = date[2]
   let date1 = newDate.split("T")
-  console.log(date1)
+  // console.log(date1)
   let day = date1[0]
-  console.log(month + "/" + day + "/" + year, date1[1])
+  // console.log(month + "/" + day + "/" + year, date1[1])
 }
 
 changeTimeDisplay()
