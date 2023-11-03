@@ -14,7 +14,7 @@ const userInput = {
 
 const savedItems = {
   hotel: [],
-  flight: []
+  flight: {}
 }
 
 function searchIataCode() {
@@ -85,7 +85,7 @@ function getHotelToken () {
     }
 
 function createHotelList(data) {
-  const hotelList = $("#hotel-list") // !jquery to the hotel list div
+  const hotelList = $(".results-list") // !jquery to the hotel list div
   for (i = 0; i < data.data.length; i++) {
     const createDiv = document.createElement("div")
     const createHeader = document.createElement("h1")
@@ -130,9 +130,23 @@ function createHotelList(data) {
     saveButton.setAttribute("id", i)
     hotelList.children().eq(i).append(saveButton)
   }
-  $("button[id]").click(function(data) {
-    console.log(this.id)
-    savedItems.hotel.push(data.data[this.id].name)
+  $("button[id]").click(function() {
+    let id = this.id
+    savedItems.hotel.push(hotel.name[this.id])
+    hideButton(id)
     console.log(savedItems)
   })
+}
+
+function hideButton(id) {
+  const hotelList = $(".results-list")
+  const createPara = document.createElement("p")
+
+  document.getElementById(id).style.display = "none"
+  createPara.textContent = "Saved"
+  createPara.setAttribute("class", "saved")
+  hotelList.children().eq(id).append(createPara)
+  $(".saved").css("font-style", "italic")
+
+  localStorage.setItem("savedTrips", JSON.stringify(savedItems))
 }
