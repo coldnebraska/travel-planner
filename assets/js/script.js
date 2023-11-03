@@ -1,12 +1,7 @@
 let token = ""
-<<<<<<< HEAD
-let hotel = {
-  city: "AUS", //user input 
-=======
 let button = ""
 const hotel = {
   iata: [],
->>>>>>> c47f0acc781669f693b0c5fbac34b1340056b198
   name: [],
   radius: [],
   rating: []
@@ -30,23 +25,51 @@ function searchIataCode() {
 
   console.log(userInput)
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
-  fetch (requestUrl, {
+  fetch(requestUrl, {
     method: "GET",
-    headers: {"X-Api-Key": "y+Klmvc+pjWsfHoKkI2OSA==h5DjimMBO5bvqGQp"}
+    headers: { "X-Api-Key": "y+Klmvc+pjWsfHoKkI2OSA==h5DjimMBO5bvqGQp" }
   })
-  .then(function (response) {
-    return response.json()
-  })
-  .then(function (data) {
-    console.log(data)
-    for (i = 0; i < data.length; i++) {
-      if (data[i].iata != "") {
-        hotel.iata.push(data[i].iata)
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      console.log(data)
+      for (i = 0; i < data.length; i++) {
+        if (data[i].iata != "") {
+          hotel.iata.push(data[i].iata)
+        }
       }
-    }
-    console.log(hotel.iata)
-    getHotelToken()
+      console.log(hotel.iata)
+      getHotelToken()
+      searchDestinationIataCode()
+    })
+}
+
+function searchDestinationIataCode() {
+  $(".error-msg").css("display", "none")
+  hotel.iata = []
+  userInput.city = $("#destination-city")[0].value
+  userInput.state = $("#destination-state")[0].value
+
+  console.log(userInput)
+  const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
+  fetch(requestUrl, {
+    method: "GET",
+    headers: { "X-Api-Key": "y+Klmvc+pjWsfHoKkI2OSA==h5DjimMBO5bvqGQp" }
   })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      console.log(data)
+      for (i = 0; i < data.length; i++) {
+        if (data[i].iata != "") {
+          hotel.iata.push(data[i].iata)
+        }
+      }
+      console.log(hotel.iata)
+      flightSearch()
+    })
 }
 
 $(".search-button").click(searchIataCode)
@@ -54,149 +77,33 @@ $(".search-button").click(searchIataCode)
 let index = 0
 
 let flights = {
-    departTime: [],
-    arrivalTime: [],
-    returnDepartTime: [],
-    returnArrivalTime: [],
-    departAirline: [],
-    returnAirline: [],
-    departFlightNumber: [],
-    returnFlightNumber: [],
-    numPassengers: [],
-    cost: [] ,
-    button: []  
+  departTime: [],
+  arrivalTime: [],
+  returnDepartTime: [],
+  returnArrivalTime: [],
+  departAirline: [],
+  returnAirline: [],
+  departFlightNumber: [],
+  returnFlightNumber: [],
+  numPassengers: [],
+  cost: [],
+  button: []
 }
-
-function getHotelToken () {
-<<<<<<< HEAD
-    let requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
-    fetch(requestTokenURL, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'grant_type=client_credentials&client_id=guryqLQUIRoKA4EyXNaj5uAeyAG1pG22&client_secret=byRpyX39LG4bx9Ap'
-    })
-    .then(function (response) {
-        return response.json()
-      })
-      .then(function (data) {
-        token = data.access_token
-      })
-      .then(function () {
-        let requestUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=PHL"
-        fetch(requestUrl, {
-            method: "GET",
-            headers: {'Authorization': 'Bearer ' + token}
-        })
-        .then(function(response){
-            return response.json()
-        })
-        .then(function(data){
-            console.log(data)
-            // for (i = 0; i < data.meta.count; i++) {
-            //   hotel.name.push(data.data[i].name)
-            //   hotel.radius.push(data.data[i].distance.value + " KM")
-            //   hotel.rating.push(data.data[i].rating + " Stars")
-            // }
-            console.log(hotel)
-        })
-      })
-      .then(function () {
-        let requestUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=PHL&destinationLocationCode=ORD&departureDate=2023-11-15&returnDate=2023-11-17&adults=2&nonStop=true&currencyCode=USD&max=25"
-        fetch(requestUrl, {
-            method: "GET",
-            headers: {'Authorization': 'Bearer ' + token}
-        })
-        .then(function(response){
-            return response.json()
-        })
-        .then(function(data){
-            console.log(data)
-            const flightOptions = $(".options")
-            // const flightSave = $(".button")
-            for(i = 0; i < data.data.length; ++i) {
-
-                // const flightDiv = document.createElement("div");
-                // flightDiv.setAttribute("class", "Flights");
-                // flightOptions.append(flightDiv);
-                
-                const departFlightTime = document.createElement('h2');
-                const arrivalFlightTime = document.createElement('h2');
-                const returnDepartTime = document.createElement('h2');
-                const returnArrivalTime = document.createElement('h2');
-                const departAirlineCode = document.createElement('h2');
-                // const returnAirlineCode = document.createElement('h2'); 
-                // const departFlightNumber = document.createElement('h2');
-                // const returnFlightNumber = document.createElement('h2');
-                const passengers = document.createElement('h2')
-                const flightPrice = document.createElement('h2');
-                const flightSave = document.createElement('button');
-
-            
-
-
-                flights.departTime.push(data.data[i].itineraries[0].segments[0].departure.at)
-                flights.arrivalTime.push(data.data[i].itineraries[0].segments[0].arrival.at)
-                flights.returnDepartTime.push(data.data[i].itineraries[1].segments[0].departure.at)
-                flights.returnArrivalTime.push(data.data[i].itineraries[1].segments[0].arrival.at)
-                flights.departAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
-                flights.returnAirline.push(data.data[i].itineraries[1].segments[0].carrierCode)
-                flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
-                flights.returnFlightNumber.push(data.data[i].itineraries[1].segments[0].number)
-                flights.cost.push(data.data[i].price.total)
-                flights.numPassengers.push(data.data[i].travelerPricings.length)
-                
-
-                departFlightTime.textContent = flights.departTime[i];
-                flightOptions.children().eq(0).append(departFlightTime);
-                arrivalFlightTime.textContent = flights.arrivalTime[i];
-                flightOptions.children().eq(1).append(arrivalFlightTime);
-                returnDepartTime.textContent = flights.returnDepartTime[i];
-                flightOptions.children().eq(2).append(returnDepartTime);
-                returnArrivalTime.textContent = flights.returnArrivalTime[i];
-                flightOptions.children().eq(3).append(returnArrivalTime);
-                departAirlineCode.textContent = flights.departAirline[i];
-                flightOptions.children().eq(4).append(departAirlineCode);
-                // returnAirlineCode.textContent = flights.returnAirline[i];
-                // flightOptions.children().eq(i).append(returnAirlineCode);
-                // departFlightNumber.textContent = flights.departFlightNumber[i];
-                // flightOptions.children().eq(i).append(departFlightNumber);
-                // returnFlightNumber.textContent = flights.returnFlightNumber[i];
-                // flightOptions.children().eq(i).append(returnFlightNumber);
-                flightPrice.textContent = flights.cost[i];
-                flightOptions.children().eq(5).append(flightPrice);
-                passengers.textContent = flights.numPassengers[i];
-                flightOptions.children().eq(6).append(passengers);
-
-                flightSave.textContent = "💾 Save";
-                flightOptions.children().eq(7).append(flightSave);
-
-            }
-
-           
-
-
-
-
-            console.log(flights)
-                
-            });
-
-      })
-=======
+function getHotelToken() {
   const requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
   fetch(requestTokenURL, {
     method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: 'grant_type=client_credentials&client_id=guryqLQUIRoKA4EyXNaj5uAeyAG1pG22&client_secret=byRpyX39LG4bx9Ap'
   })
-  .then(function (response) {
-    return response.json()
-  })
-  .then(function (data) {
-    token = data.access_token
-    flightSearch()
-    hotelSearch()
-  })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      token = data.access_token
+      flightSearch()
+      hotelSearch()
+    })
 }
 
 function hotelSearch() {
@@ -204,39 +111,125 @@ function hotelSearch() {
   const hotelUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + iataCode + "&radius=" + userInput.radius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
   fetch(hotelUrl, {
     method: "GET",
-    headers: {'Authorization': 'Bearer ' + token}
+    headers: { 'Authorization': 'Bearer ' + token }
   })
-  .then(function(response){
-    return response.json()
-  })
-  .then(function(data){
-    console.log(data)
-    createHotelList(data)
-  })
-  .catch(error => {
-    if (iataCode != undefined) {
-      index += 1
-      hotelSearch()
-    } else {
-      $(".error-msg").css("display", "block")
->>>>>>> c47f0acc781669f693b0c5fbac34b1340056b198
-    }
-  })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      console.log(data)
+      createHotelList(data)
+    })
+    .catch(error => {
+      if (iataCode != undefined) {
+        index += 1
+        hotelSearch()
+      } else {
+        $(".error-msg").css("display", "block")
+      }
+    })
 }
 
 function flightSearch() {
   iataCode = hotel.iata[index]
   const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
   fetch(flightUrl, {
-      method: "GET",
-      headers: {'Authorization': 'Bearer ' + token}
+    method: "GET",
+    headers: { 'Authorization': 'Bearer ' + token }
   })
-  .then(function(response){
+    .then(function (response) {
       return response.json()
-  })
-  .then(function(data){
+    })
+    .then(function (data) {
       console.log(data)
-  })
+      const flightOptions = $(".options")
+      // const flightSave = $(".button")
+      for (i = 0; i < data.data.length; ++i) {
+
+        // const flightDiv = document.createElement("div");
+        // flightDiv.setAttribute("class", "Flights");
+        // flightOptions.append(flightDiv);
+
+        const departFlightTime = document.createElement('h2');
+        const arrivalFlightTime = document.createElement('h2');
+        const returnDepartTime = document.createElement('h2');
+        const returnArrivalTime = document.createElement('h2');
+        const departAirlineCode = document.createElement('h2');
+        // const returnAirlineCode = document.createElement('h2'); 
+        // const departFlightNumber = document.createElement('h2');
+        // const returnFlightNumber = document.createElement('h2');
+        const passengers = document.createElement('h2')
+        const flightPrice = document.createElement('h2');
+        const flightSave = document.createElement('button');
+
+
+
+
+        flights.departTime.push(data.data[i].itineraries[0].segments[0].departure.at)
+        flights.arrivalTime.push(data.data[i].itineraries[0].segments[0].arrival.at)
+        flights.returnDepartTime.push(data.data[i].itineraries[1].segments[0].departure.at)
+        flights.returnArrivalTime.push(data.data[i].itineraries[1].segments[0].arrival.at)
+        flights.departAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
+        flights.returnAirline.push(data.data[i].itineraries[1].segments[0].carrierCode)
+        flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
+        flights.returnFlightNumber.push(data.data[i].itineraries[1].segments[0].number)
+        flights.cost.push(data.data[i].price.total)
+        flights.numPassengers.push(data.data[i].travelerPricings.length)
+
+
+        departFlightTime.textContent = flights.departTime[i];
+        flightOptions.children().eq(0).append(departFlightTime);
+        arrivalFlightTime.textContent = flights.arrivalTime[i];
+        flightOptions.children().eq(1).append(arrivalFlightTime);
+        returnDepartTime.textContent = flights.returnDepartTime[i];
+        flightOptions.children().eq(2).append(returnDepartTime);
+        returnArrivalTime.textContent = flights.returnArrivalTime[i];
+        flightOptions.children().eq(3).append(returnArrivalTime);
+        departAirlineCode.textContent = flights.departAirline[i];
+        flightOptions.children().eq(4).append(departAirlineCode);
+        // returnAirlineCode.textContent = flights.returnAirline[i];
+        // flightOptions.children().eq(i).append(returnAirlineCode);
+        // departFlightNumber.textContent = flights.departFlightNumber[i];
+        // flightOptions.children().eq(i).append(departFlightNumber);
+        // returnFlightNumber.textContent = flights.returnFlightNumber[i];
+        // flightOptions.children().eq(i).append(returnFlightNumber);
+        flightPrice.textContent = flights.cost[i];
+        flightOptions.children().eq(5).append(flightPrice);
+        passengers.textContent = flights.numPassengers[i];
+        flightOptions.children().eq(6).append(passengers);
+
+        flightSave.textContent = "💾 Save";
+        flightSave.setAttribute("id", i)
+        flightOptions.children().eq(7).append(flightSave);
+      }
+      $("button[id]").click(function () {
+        let id = this.id
+        savedItems.flight.push(flights.departTime[this.id], flights.arrivalTime[this.id])
+        hideButton(id)
+        console.log(savedItems)
+      })
+    })
+    .catch(error => {
+      if (iataCode != undefined) {
+        index += 1
+        hotelSearch()
+      }
+    })
+
+
+  function hideButton(id) {
+    const hotelList = $(".options")
+    const createPara = document.createElement("p")
+
+    document.getElementById(id).style.display = "none"
+    createPara.textContent = "Saved"
+    createPara.setAttribute("class", "saved")
+    flightSave.children().eq(id).append(createPara)
+    $(".saved").css("font-style", "italic")
+
+    localStorage.setItem("savedTrips", JSON.stringify(savedItems))
+  }
+
 }
 
 function createHotelList(data) {
@@ -251,7 +244,7 @@ function createHotelList(data) {
     // create a hotel div for each returned hotel
     createDiv.setAttribute("class", "hotel")
     hotelList.append(createDiv)
-    
+
     // add rating stars
     let ratingString = ""
     let x = 0
@@ -259,19 +252,19 @@ function createHotelList(data) {
       ratingString += "★"
       x++
     }
-    
+
     if (x < 5) {
       while (x < 5) {
         ratingString += "☆"
         x++
       }
     }
-    
+
     // add each hotel value to its respective key
     hotel.name.push(data.data[i].name)
-    hotel.radius.push(data.data[i].distance.value + " Mi") 
+    hotel.radius.push(data.data[i].distance.value + " Mi")
     hotel.rating.push(ratingString + " Stars")
-    
+
     // append each hotel element to a hotel div
     createHeader.textContent = hotel.name[i]
     hotelList.children().eq(i).append(createHeader)
@@ -281,11 +274,11 @@ function createHotelList(data) {
     hotelList.children().eq(i).append(createStar)
 
     // append save button to each div
-    saveButton.textContent =  "💾 Save"
+    saveButton.textContent = "💾 Save"
     saveButton.setAttribute("id", i)
     hotelList.children().eq(i).append(saveButton)
   }
-  $("button[id]").click(function() {
+  $("button[id]").click(function () {
     let id = this.id
     savedItems.hotel.push(hotel.name[this.id])
     hideButton(id)
