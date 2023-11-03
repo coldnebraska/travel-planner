@@ -5,6 +5,8 @@ body, h1, h2, p {
 
 body {
     font-family: Arial, sans-serif;
+    background: url('./assets/plane-img.jpg') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
 }
@@ -32,6 +34,9 @@ main {
 }
     
 .hero {
+    background-image: url('./assets/plane-img.jpg');
+    background-size: cover;
+    background-position: center;
     text-align: center;
     padding: 0;
     color: #fff;
@@ -105,17 +110,11 @@ button[type="submit"]:hover {
     background-color: #555;
 }
 
+.card 
+
 footer {
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 1rem;
 }
-
-
-
-
-
-
-
-
