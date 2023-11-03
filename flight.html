@@ -24,7 +24,10 @@
                 <form id="travel-form">
                     <div class="form-group">
                         <label for="outgoing">Outgoing Location:</label>
-                        <input type="text" id="outgoing" name="outgoing" required>
+                        <div class="form-column">
+                            <input type="text" id="outgoing-city" name="city" placeholder="City: ex. Austin" required>
+                            <input type="text" id="outgoing-state" name="state" placeholder="State: ex. Texas" minlength="3" required>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="outgoing-date">Outgoing Date:</label>
@@ -44,10 +47,11 @@
                     </div>
                     <button type="button" id="toggle-return-date">Add/Remove Return Date</button>
                     <button type="submit" class="search-button">Search</button>
+                    <div class="error-msg"><p>Unknown City or State. Please Try Again.</p></div>
                 </form>
             </section>
         </main>
-    </div>  
+    </div>
 
     <div class="card shadow-md">
         <h3 class="card-header text-uppercase text-center font-bold flex justify-center h-20"> Flight Results </h3>

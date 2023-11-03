@@ -105,7 +105,10 @@ button[type="submit"]:hover {
     background-color: #555;
 }
 
-.card 
+.form-column {
+    display: flex;
+    gap: 15px;
+}
 
 footer {
     background-color: #333;
@@ -114,10 +117,8 @@ footer {
     padding: 1rem;
 }
 
-
-
-
-
-
-
-
+.error-msg {
+    display: none;
+    color: red;
+    font-size: 12px;
+}
