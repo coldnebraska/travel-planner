@@ -11,7 +11,7 @@
 <body>
     <div class="wrapper">
         <header>
-            <h1 class="text-3xl font-bold">Plan your trip today!</h1>
+            <h1>Plan your trip today!</h1>
         </header>
 
         <section class="hero">
@@ -53,12 +53,12 @@
         </main>
     </div>
 
-    <div class="card">
-        <h3 class="card-header text-uppercase text-center font-bold flex justify-center items-center h-20"> Flight Results </h3>
+    <div class="card shadow-md">
+        <h3 class="card-header text-uppercase text-center font-bold flex justify-center h-20"> Flight Results </h3>
         <div id="search-results" class="card-body">
             <table class="table-auto w-full">
                 <thead>
-                    <tr>
+                    <tr class="options">
                         <th class="px-4 py-2">Departure</th>
                         <th class="px-4 py-2">Arrival</th>
                         <th class="px-4 py-2">Return</th>
@@ -66,7 +66,7 @@
                         <th class="px-4 py-2">Airline</th>
                         <th class="px-4 py-2">Cost</th>
                         <th class="px-4 py-2">Passengers</th>
-                        <th class="px-4 py-2">Action</th>
+                        <th id="button" class="px-0 py-0">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,6 +78,9 @@
     
          
     </div>    
+
+
+
     <footer>
         <p>&copy; 2023 Travel Planner</p>
     </footer>
