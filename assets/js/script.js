@@ -68,7 +68,6 @@ function searchDestinationIataCode() {
         }
       }
       console.log(hotel.iata)
-      flightSearch()
     })
 }
 
