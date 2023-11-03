@@ -24,7 +24,7 @@
                 <h2>Search Flights</h2>
                 <form id="travel-form">
                     <div class="form-group">
-                        <label for="outgoing">Outgoing Location:</label>
+                        <label for="outgoing-city">Outgoing Location:</label>
                         <div class="form-column">
                             <input type="text" id="outgoing-city" name="city" placeholder="City: ex. Austin" required>
                             <input type="text" id="outgoing-state" name="state" placeholder="State: ex. Texas"
@@ -36,7 +36,7 @@
                         <input type="date" id="outgoing-date" name="outgoing-date" required>
                     </div>
                     <div class="form-group">
-                        <label for="destination">Destination:</label>
+                        <label for="destination-city">Destination:</label>
                         <div class="form-column">
                             <input type="text" id="destination-city" name="city" placeholder="City: ex. Philadelphia"
                                 required>
@@ -66,20 +66,17 @@
         <h3 class="card-header text-uppercase text-center font-bold flex justify-center h-20"> Flight Results </h3>
         <div id="search-results" class="card-body">
             <table class="table-auto w-full">
-                <thead>
+                <tbody class="flight-results">
                     <tr class="options">
-                        <th class="px-4 py-2">Departure</th>
-                        <th class="px-4 py-2">Arrival</th>
-                        <th class="px-4 py-2">Return</th>
-                        <th class="px-4 py-2">Return Arrival</th>
-                        <th class="px-4 py-2">Airline</th>
-                        <th class="px-4 py-2">Cost</th>
-                        <th class="px-4 py-2">Passengers</th>
-                        <th id="button" class="px-0 py-0">Action</th>
+                        <th class="py-2">Departure</th>
+                        <th class="py-2">Arrival</th>
+                        <th class="py-2">Return</th>
+                        <th class="py-2">Return Arrival</th>
+                        <th class="py-2">Airline</th>
+                        <th class="py-2">Cost</th>
+                        <th class="py-2">Passengers</th>
+                        <th id="button" class="py-2">Select</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <!-- display flight results here once api is complete -->
                 </tbody>
             </table>
         </div>
