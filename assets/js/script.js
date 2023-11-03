@@ -1,14 +1,14 @@
 let token = ""
 let button = ""
 const hotel = {
-  iata: "",
+  iata: [],
   name: [],
   radius: [], 
   rating: []
 }
 const userInput = {
-  city: "austin",
-  region: "texas",
+  city: "",
+  region: "",
   radius: 5 - 1 // !recommended 5 mi (prevent 100+ hotel list)
 }
 
@@ -18,6 +18,12 @@ const savedItems = {
 }
 
 function searchIataCode() {
+  $(".error-msg").css("display", "none")
+  hotel.iata = []
+  userInput.city = $("#outgoing-city")[0].value
+  userInput.state = $("#outgoing-state")[0].value
+
+  console.log(userInput)
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
   fetch (requestUrl, {
     method: "GET",
@@ -30,7 +36,7 @@ function searchIataCode() {
     console.log(data)
     for (i = 0; i < data.length; i++) {
       if (data[i].iata != "") {
-        hotel.iata = data[i].iata
+        hotel.iata.push(data[i].iata)
       }
     }
     console.log(hotel.iata)
@@ -38,51 +44,65 @@ function searchIataCode() {
   })
 }
 
-searchIataCode()
+$(".search-button").click(searchIataCode)
+
+let index = 0
 
 function getHotelToken () {
-    const requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
-    fetch(requestTokenURL, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'grant_type=client_credentials&client_id=guryqLQUIRoKA4EyXNaj5uAeyAG1pG22&client_secret=byRpyX39LG4bx9Ap'
-    })
+  const requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
+  fetch(requestTokenURL, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: 'grant_type=client_credentials&client_id=guryqLQUIRoKA4EyXNaj5uAeyAG1pG22&client_secret=byRpyX39LG4bx9Ap'
+  })
+  .then(function (response) {
+    return response.json()
+  })
+  .then(function (data) {
+    token = data.access_token
+    flightSearch()
+    hotelSearch()
+  })
+}
 
-    .then(function (response) {
-        return response.json()
-      })
-      .then(function (data) {
-        token = data.access_token
-      })
-      .then(function () {
-        const hotelUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + hotel.iata + "&radius=" + userInput.radius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
-        fetch(hotelUrl, {
-          method: "GET",
-          headers: {'Authorization': 'Bearer ' + token}
-        })
-        .then(function(response){
-          return response.json()
-        })
-        .then(function(data){
-          console.log(data)
-          createHotelList(data)
-        })
-      })
-
-      .then( function () {
-        const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + hotel.iata + "&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
-        fetch(flightUrl, {
-            method: "GET",
-            headers: {'Authorization': 'Bearer ' + token}
-        })
-        .then(function(response){
-            return response.json()
-        })
-        .then(function(data){
-            console.log(data)
-        })
-      })
+function hotelSearch() {
+  let iataCode = hotel.iata[index]
+  const hotelUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + iataCode + "&radius=" + userInput.radius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
+  fetch(hotelUrl, {
+    method: "GET",
+    headers: {'Authorization': 'Bearer ' + token}
+  })
+  .then(function(response){
+    return response.json()
+  })
+  .then(function(data){
+    console.log(data)
+    createHotelList(data)
+  })
+  .catch(error => {
+    if (iataCode != undefined) {
+      index += 1
+      hotelSearch()
+    } else {
+      $(".error-msg").css("display", "block")
     }
+  })
+}
+
+function flightSearch() {
+  iataCode = hotel.iata[index]
+  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
+  fetch(flightUrl, {
+      method: "GET",
+      headers: {'Authorization': 'Bearer ' + token}
+  })
+  .then(function(response){
+      return response.json()
+  })
+  .then(function(data){
+      console.log(data)
+  })
+}
 
 function createHotelList(data) {
   const hotelList = $(".results-list") // !jquery to the hotel list div
@@ -150,3 +170,17 @@ function hideButton(id) {
 
   localStorage.setItem("savedTrips", JSON.stringify(savedItems))
 }
+
+function changeTimeDisplay() {
+  let time = "2023-11-15T17:32:00"
+  let date = time.split("-")
+  let month = date[1]
+  let year = date[0]
+  let newDate = date[2]
+  let date1 = newDate.split("T")
+  console.log(date1)
+  let day = date1[0]
+  console.log(month + "/" + day + "/" + year, date1[1])
+}
+
+changeTimeDisplay()
