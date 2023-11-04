@@ -114,6 +114,15 @@ footer {
     padding: 1rem;
 }
 
+tr {
+    display: flex;
+}
+
+th {
+    display: flex;
+    flex-direction: column;
+}
+
 
 
 
