@@ -24,7 +24,6 @@ header {
 
 main {
     max-width: 960px;
-    margin: 7% auto;
     margin-bottom: 7rem;
     border-radius: 5px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
@@ -105,11 +104,45 @@ button[type="submit"]:hover {
     background-color: #555;
 }
 
-.card 
+.form-column {
+    display: flex;
+    gap: 15px;
+}
 
 footer {
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 1rem;
+}
+
+.error-msg {
+    display: none;
+    color: red;
+    font-size: 12px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-around;
+}
+
+.options th {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.flight {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.flight button {
+    padding: 5px;
+    background-color: rgb(64, 64, 255);
+    color: white;
+    border-radius: 5px;
 }
