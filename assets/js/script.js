@@ -131,20 +131,21 @@ function hotelSearch() {
       }
     })
 }
-// let $departDateInput = $('#outgoing-date');
-// let $returnDateInput = $('#return-date');
-// let $adultPassengerInput = $('#passengers');
+let $departDateInput = $('#outgoing-date');
+let $returnDateInput = $('#return-date');
+let $adultPassengerInput = $('#passengers');
 
 function flightSearch() {
   iataCode = hotel.outgoingIata[index]
   iataCodeDestination = hotel.destinationIata[index]
   console.log(iataCode)
 
-  // let departDate = $departDateInput.val();
-  // let returnDate = $returnDateInput.val();
-  // let adult = $adultPassengerInput.val();
+  let departDate = $departDateInput.val();
+  let returnDate = $returnDateInput.val();
+  let adult = $adultPassengerInput.val();
   console.log('#######')
   console.log(departDate)
+  console.log("#########")
   
   const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=" + iataCodeDestination + "&departureDate=" + departDate + "&returnDate=" + returnDate + "&adults=" + adult + "&max=30"
   fetch(flightUrl, {
