@@ -150,27 +150,41 @@ function flightSearch() {
   })
   .then(function (data) {
     console.log(data)
-    let resultsList = $(".flight-results")
-    for (i = 0;i < data.meta.count; i++) {
-      const createFlightDiv = document.createElement("div")
-      createFlightDiv.setAttribute("class", "flight")
-      resultsList.append(createFlightDiv)
-      
+    let departure = $(".departure")
+    let arrival = $(".arrival")
+    let returnTime = $(".return")
+    let returnArrival = $(".return-arrival")
+    let airline = $(".airline")
+    let cost = $(".cost")
+    let passengers = $(".passengers")
+    let button = $(".select-flight")
+
+    for (i = 0;i < data.meta.count && i < 25; i++) {
       const createDt = document.createElement("p")
       const createAt = document.createElement("p")
       const createRdt = document.createElement("p")
       const createRat = document.createElement("p")
-      const createDa = document.createElement("p")
-      const createDfn = document.createElement("p")
-      const createRfn = document.createElement("p")
+      const createA = document.createElement("p")
       const createC = document.createElement("p")
       const createNp = document.createElement("p")
       const createButton = document.createElement("button")
 
-      flights.departTime.push(data.data[i].itineraries[0].segments[0].departure.at)
-      flights.arrivalTime.push(data.data[i].itineraries[0].segments[0].arrival.at)
-      flights.returnDepartTime.push(data.data[i].itineraries[0].segments[0].departure.at)
-      flights.returnArrivalTime.push(data.data[i].itineraries[0].segments[0].arrival.at)
+      let departString = data.data[i].itineraries[0].segments[0].departure.at
+      departString = departString.replace("T", " ")
+      flights.departTime.push(departString)
+
+      let arrivalString = data.data[i].itineraries[0].segments[0].arrival.at
+      arrivalString = arrivalString.replace("T", " ")
+      flights.arrivalTime.push(arrivalString)
+
+      let returnDepartString = data.data[i].itineraries[0].segments[0].departure.at
+      returnDepartString = returnDepartString.replace("T", " ")
+      flights.returnDepartTime.push(returnDepartString)
+
+      let returnArrivalString = data.data[i].itineraries[0].segments[0].arrival.at
+      returnArrivalString = returnArrivalString.replace("T", " ")
+      flights.returnArrivalTime.push(returnArrivalString)
+
       flights.departAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
       flights.returnAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
       flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
@@ -179,28 +193,28 @@ function flightSearch() {
       flights.numPassengers.push(data.data[i].travelerPricings.length)
 
       createDt.textContent = flights.departTime[i]
-      resultsList.children().eq(i + 1).append(createDt)
+      departure.append(createDt)
 
       createAt.textContent = flights.arrivalTime[i]
-      resultsList.children().eq(i + 1).append(createAt)
+      arrival.append(createAt)
 
       createRdt.textContent = flights.returnDepartTime[i]
-      resultsList.children().eq(i + 1).append(createRdt)
+      returnTime.append(createRdt)
 
       createRat.textContent = flights.returnArrivalTime[i]
-      resultsList.children().eq(i + 1).append(createRat)
+      returnArrival.append(createRat)
 
-      createDa.textContent = flights.departAirline[i]
-      resultsList.children().eq(i + 1).append(createDa)
+      createA.textContent = flights.departAirline[i]
+      airline.append(createA)
 
-      createC.textContent = flights.cost[i]
-      resultsList.children().eq(i + 1).append(createC)
+      createC.textContent = "$" + flights.cost[i] + " USD"
+      cost.append(createC)
 
       createNp.textContent = flights.numPassengers[i]
-      resultsList.children().eq(i + 1).append(createNp)
+      passengers.append(createNp)
       
       createButton.textContent = "Select Flight"
-      resultsList.children().eq(i + 1).append(createButton)
+      button.append(createButton)
     }
 
     $("button[id]").click(function () {
@@ -292,17 +306,3 @@ function hideButton(id) {
 
   localStorage.setItem("savedTrips", JSON.stringify(savedItems))
 }
-
-function changeTimeDisplay() {
-  let time = "2023-11-15T17:32:00"
-  let date = time.split("-")
-  let month = date[1]
-  let year = date[0]
-  let newDate = date[2]
-  let date1 = newDate.split("T")
-  // console.log(date1)
-  let day = date1[0]
-  // console.log(month + "/" + day + "/" + year, date1[1])
-}
-
-changeTimeDisplay()
