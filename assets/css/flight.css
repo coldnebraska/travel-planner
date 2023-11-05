@@ -133,22 +133,29 @@ footer {
     justify-content: space-around;
 }
 
-.options th {
+.options h2 {
+    text-align: center;
+}
+
+.options div {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.flight {
-    display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 15px;
+    text-align: center;
+    gap: 10px;
+    word-wrap: normal;
+    margin-bottom: 20px;
 }
 
-.flight button {
+.options p,
+.options button {
     padding: 5px;
-    background-color: rgb(64, 64, 255);
+}
+
+.select-flight button {
+    background-color: rgb(78, 78, 247);
     color: white;
     border-radius: 5px;
+    padding: 5px;
 }

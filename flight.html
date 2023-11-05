@@ -27,8 +27,7 @@
                         <label for="outgoing-city">Outgoing Location:</label>
                         <div class="form-column">
                             <input type="text" id="outgoing-city" name="city" placeholder="City: ex. Austin" required>
-                            <input type="text" id="outgoing-state" name="state" placeholder="State: ex. Texas"
-                                minlength="3" required>
+                            <input type="text" id="outgoing-state" name="state" placeholder="State: ex. Texas" minlength="3" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -58,9 +57,7 @@
                         <p>Unknown City or State. Please Try Again.</p>
                     </div>
                     <div class="error-msg2">
-                        <p>No Flights Available For The Selected Dates. Please Try Again.
-                        </p>
-                    </div>
+                        <p>No Flights Available For The Selected Dates. Please Try Again.</p>
                     </div>
                 </div>
             </section>
@@ -68,29 +65,36 @@
     </div>
 
     <div class="card shadow-md">
-        <h3 class="card-header text-uppercase text-center font-bold flex justify-center h-20"> Flight Results </h3>
+        <h1 class="card-header text-uppercase text-center font-bold flex justify-center h-20"> Flight Results </h1>
         <div id="search-results" class="card-body">
-            <table class="table-auto w-full">
-                <tbody class="flight-results">
-                    <tr class="options">
-                        <th class="py-2">Departure</th>
-                        <th class="py-2">Arrival</th>
-                        <th class="py-2">Return</th>
-                        <th class="py-2">Return Arrival</th>
-                        <th class="py-2">Airline</th>
-                        <th class="py-2">Cost</th>
-                        <th class="py-2">Passengers</th>
-                        <th id="button" class="py-2">Select</th>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="options">
+                <div class="departure">
+                    <h2>Departure</h2>
+                </div>
+                <div class="arrival">
+                    <h2>Arrival</h2>
+                </div>
+                <div class="return">
+                    <h2>Return</h2>
+                </div>
+                <div class="return-arrival">
+                    <h2>Return Arrival</h2>
+                </div>
+                <div class="airline">
+                    <h2>Airline</h2>
+                </div>
+                <div class="cost">
+                    <h2>Cost</h2>
+                </div>
+                <div class="passengers">
+                    <h2>Passengers</h2>
+                </div>
+                <div class="select-flight">
+                    <h2 id="button">Select</h2>
+                </div>
+            </div>
         </div>
     </div>
-
-
-    </div>
-
-
 
     <footer>
         <p>&copy; 2023 Travel Planner</p>
