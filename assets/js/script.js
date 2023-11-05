@@ -26,7 +26,7 @@ function searchIataCode() {
   userInput.city = $("#outgoing-city")[0].value
   userInput.region = $("#outgoing-state")[0].value
 
-  // console.log(userInput)
+  console.log(userInput)
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
   fetch(requestUrl, {
     method: "GET",
@@ -42,10 +42,11 @@ function searchIataCode() {
           hotel.outgoingIata.push(data[i].iata)
         }
       }
-      // console.log(hotel.outgoingIata)
+      console.log(hotel.outgoingIata)
       searchDestinationIataCode()
     })
 }
+console.log(searchDestinationIataCode)
 
 function searchDestinationIataCode() {
   $(".error-msg").css("display", "none")
@@ -77,7 +78,7 @@ function searchDestinationIataCode() {
 $(".search-button").click(searchIataCode)
 
 let index = 0
-
+// flight object for API Flight Info
 let flights = {
   departTime: [],
   arrivalTime: [],
@@ -104,6 +105,7 @@ function getHotelToken() {
       token = data.access_token
       hotelSearch()
       flightSearch()
+      console.log('hotel flight functions')
     })
 }
 
@@ -131,10 +133,24 @@ function hotelSearch() {
     })
 }
 
+// variables for creating dynamic url flight search
+let $departDateInput = $('#outgoing-date');
+let $returnDateInput = $('#return-date');
+let $adultPassengerInput = $('#passengers');
+
+// Flight Search Function
 function flightSearch() {
   iataCode = hotel.outgoingIata[index]
+  iataCodeDestination = hotel.destinationIata[index]
   console.log(iataCode)
-  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
+
+  // Variable for the ID's set above grabbing the user input form the IDs for the dynamic url
+  let departDate = $departDateInput.val();
+  let returnDate = $returnDateInput.val();
+  let adult = $adultPassengerInput.val();
+  
+  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=" + iataCodeDestination + "&departureDate=" + departDate + "&returnDate=" + returnDate + "&adults=" + adult + "&max=30"
+  console.log(flightUrl)
   fetch(flightUrl, {
     method: "GET",
     headers: { 'Authorization': 'Bearer ' + token }
@@ -151,10 +167,12 @@ function flightSearch() {
   .then(function (data) {
     console.log(data)
     let resultsList = $(".flight-results")
-    for (i = 0;i < data.meta.count; i++) {
+    console.log('!!!!!!!!!!!!!!!!!!')
+    for (i = 0;i < data.data.length; i++) {
       const createFlightDiv = document.createElement("div")
       createFlightDiv.setAttribute("class", "flight")
       resultsList.append(createFlightDiv)
+      console.log('$$$$$$$$$$$$$$$')
       
       const createDt = document.createElement("p")
       const createAt = document.createElement("p")
@@ -203,6 +221,10 @@ function flightSearch() {
       resultsList.children().eq(i + 1).append(createButton)
     }
 
+    if (data.data.length === 0) {
+      $(".error-msg2").css("display", "block")
+    }
+
     $("button[id]").click(function () {
       let id = this.id
       savedItems.flight.push(flights.departTime[this.id], flights.arrivalTime[this.id])
@@ -212,18 +234,17 @@ function flightSearch() {
   })
 
   function hideButton(id) {
-    const hotelList = $(".options")
+    const flightList = $(".options")
     const createPara = document.createElement("p")
 
     document.getElementById(id).style.display = "none"
     createPara.textContent = "Saved"
     createPara.setAttribute("class", "saved")
-    flightSave.children().eq(id).append(createPara)
+    flightList.children().eq(id).append(createPara)
     $(".saved").css("font-style", "italic")
 
     localStorage.setItem("savedTrips", JSON.stringify(savedItems))
   }
-
 }
 
 function createHotelList(data) {
@@ -292,6 +313,7 @@ function hideButton(id) {
 
   localStorage.setItem("savedTrips", JSON.stringify(savedItems))
 }
+
 
 function changeTimeDisplay() {
   let time = "2023-11-15T17:32:00"
