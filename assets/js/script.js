@@ -78,7 +78,7 @@ function searchDestinationIataCode() {
 $(".search-button").click(searchIataCode)
 
 let index = 0
-
+// flight object for API Flight Info
 let flights = {
   departTime: [],
   arrivalTime: [],
@@ -105,6 +105,7 @@ function getHotelToken() {
       token = data.access_token
       hotelSearch()
       flightSearch()
+      console.log('hotel flight functions')
     })
 }
 
@@ -131,23 +132,25 @@ function hotelSearch() {
       }
     })
 }
+
+// variables for creating dynamic url flight search
 let $departDateInput = $('#outgoing-date');
 let $returnDateInput = $('#return-date');
 let $adultPassengerInput = $('#passengers');
 
+// Flight Search Function
 function flightSearch() {
   iataCode = hotel.outgoingIata[index]
   iataCodeDestination = hotel.destinationIata[index]
   console.log(iataCode)
 
+  // Variable for the ID's set above grabbing the user input form the IDs for the dynamic url
   let departDate = $departDateInput.val();
   let returnDate = $returnDateInput.val();
   let adult = $adultPassengerInput.val();
-  console.log('#######')
-  console.log(departDate)
-  console.log("#########")
   
   const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=" + iataCodeDestination + "&departureDate=" + departDate + "&returnDate=" + returnDate + "&adults=" + adult + "&max=30"
+  console.log(flightUrl)
   fetch(flightUrl, {
     method: "GET",
     headers: { 'Authorization': 'Bearer ' + token }
@@ -164,10 +167,12 @@ function flightSearch() {
   .then(function (data) {
     console.log(data)
     let resultsList = $(".flight-results")
+    console.log('!!!!!!!!!!!!!!!!!!')
     for (i = 0;i < data.data.length; i++) {
       const createFlightDiv = document.createElement("div")
       createFlightDiv.setAttribute("class", "flight")
       resultsList.append(createFlightDiv)
+      console.log('$$$$$$$$$$$$$$$')
       
       const createDt = document.createElement("p")
       const createAt = document.createElement("p")
@@ -214,6 +219,10 @@ function flightSearch() {
       
       createButton.textContent = "Select Flight"
       resultsList.children().eq(i + 1).append(createButton)
+    }
+
+    if (data.data.length === 0) {
+      $(".error-msg2").css("display", "block")
     }
 
     $("button[id]").click(function () {
