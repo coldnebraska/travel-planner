@@ -34,7 +34,6 @@ function searchIataCode() {
   userInput.city = $("#outgoing-city")[0].value
   userInput.region = $("#outgoing-state")[0].value
 
-  // console.log(userInput)
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
   fetch(requestUrl, {
     method: "GET",
@@ -50,7 +49,6 @@ function searchIataCode() {
           hotel.outgoingIata.push(data[i].iata)
         }
       }
-      // console.log(hotel.outgoingIata)
       searchDestinationIataCode()
     })
 }
@@ -61,7 +59,6 @@ function searchDestinationIataCode() {
   userInput.city = $("#destination-city")[0].value
   userInput.region = $("#destination-state")[0].value
 
-  // console.log(userInput)
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
   fetch(requestUrl, {
     method: "GET",
@@ -77,7 +74,6 @@ function searchDestinationIataCode() {
           hotel.destinationIata.push(data[i].iata)
         }
       }
-      console.log(hotel.destinationIata)
       getHotelToken()
     })
 }
@@ -85,7 +81,7 @@ function searchDestinationIataCode() {
 $(".search-button").click(searchIataCode)
 
 let index = 0
-
+// flight object for API Flight Info
 let flights = {
   departTime: [],
   arrivalTime: [],
@@ -139,16 +135,33 @@ function hotelSearch() {
     })
 }
 
+// variables for creating dynamic url flight search
+let $departDateInput = $('#outgoing-date');
+let $returnDateInput = $('#return-date');
+let $adultPassengerInput = $('#passengers');
+
+// Flight Search Function
 function flightSearch() {
   iataCode = hotel.outgoingIata[index]
-  console.log(iataCode)
-  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=HNL&departureDate=2023-12-02&adults=1"
+  iataCodeDestination = hotel.destinationIata[index]
+
+  // Variable for the ID's set above grabbing the user input form the IDs for the dynamic url
+  let departDate = $departDateInput.val();
+  let returnDate = $returnDateInput.val();
+  let adult = $adultPassengerInput.val();
+  
+  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=" + iataCodeDestination + "&departureDate=" + departDate + "&returnDate=" + returnDate + "&adults=" + adult
   fetch(flightUrl, {
     method: "GET",
     headers: { 'Authorization': 'Bearer ' + token }
   })
   .catch(error => {
     if (iataCode != undefined) {
+      index += 1
+      flightSearch()
+    }
+    if (error) {
+      console.log("error found")
       index += 1
       flightSearch()
     }
@@ -224,6 +237,10 @@ function flightSearch() {
       createButton.textContent = "Select Flight"
       createButton.setAttribute("id", i)
       button.append(createButton)
+    }
+
+    if (data.data.length === 0) {
+      $(".error-msg2").css("display", "block")
     }
 
     $("button[id]").click(function () {

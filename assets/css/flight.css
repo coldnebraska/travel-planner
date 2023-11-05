@@ -122,6 +122,12 @@ footer {
     font-size: 12px;
 }
 
+.error-msg2 {
+    display: none;
+    color: red;
+    font-size: 12px;
+}
+
 .options {
     display: flex;
     justify-content: space-around;
