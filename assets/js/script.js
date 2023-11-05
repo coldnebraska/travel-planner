@@ -15,7 +15,15 @@ const userInput = {
 
 const savedItems = {
   hotel: [],
-  flight: {}
+  flight: {
+    departure: "",
+    arrival: "",
+    return: "",
+    returnArrival: "",
+    airline: "",
+    cost: "",
+    passengers: ""
+  }
 }
 
 function searchIataCode() {
@@ -134,7 +142,7 @@ function hotelSearch() {
 function flightSearch() {
   iataCode = hotel.outgoingIata[index]
   console.log(iataCode)
-  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=PAR&departureDate=2023-12-02&adults=1"
+  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=HNL&departureDate=2023-12-02&adults=1"
   fetch(flightUrl, {
     method: "GET",
     headers: { 'Authorization': 'Bearer ' + token }
@@ -214,34 +222,28 @@ function flightSearch() {
       passengers.append(createNp)
       
       createButton.textContent = "Select Flight"
+      createButton.setAttribute("id", i)
       button.append(createButton)
     }
 
     $("button[id]").click(function () {
       let id = this.id
-      savedItems.flight.push(flights.departTime[this.id], flights.arrivalTime[this.id])
-      hideButton(id)
+      savedItems.flight.departure = flights.departTime[id]
+      savedItems.flight.arrival = flights.arrivalTime[id]
+      savedItems.flight.return = flights.returnDepartTime[id]
+      savedItems.flight.returnArrival = flights.returnArrivalTime[id]
+      savedItems.flight.airline = flights.departAirline[id]
+      savedItems.flight.cost = flights.cost[id]
+      savedItems.flight.passengers = flights.numPassengers[id]
       console.log(savedItems)
+      localStorage.setItem("savedTrips", JSON.stringify(savedItems))
+      window.location.href = "page2.html"
     })
   })
-
-  function hideButton(id) {
-    const hotelList = $(".options")
-    const createPara = document.createElement("p")
-
-    document.getElementById(id).style.display = "none"
-    createPara.textContent = "Saved"
-    createPara.setAttribute("class", "saved")
-    flightSave.children().eq(id).append(createPara)
-    $(".saved").css("font-style", "italic")
-
-    localStorage.setItem("savedTrips", JSON.stringify(savedItems))
-  }
-
 }
 
 function createHotelList(data) {
-  const hotelList = $(".results-list") // !jquery to the hotel list div
+  const hotelList = $("#results-list") // !jquery to the hotel list div
   for (i = 0; i < data.data.length; i++) {
     const createDiv = document.createElement("div")
     const createHeader = document.createElement("h1")
