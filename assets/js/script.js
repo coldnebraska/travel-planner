@@ -458,6 +458,10 @@ function renderFlight() {
         createHotel.textContent = flightData.hotel[i]
         hotelData.append(createHotel)
       }
+    } else {
+      const createHotel = document.createElement("p")
+      createHotel.textContent = "No hotels selected."
+      hotelData.append(createHotel)
     }
   }
 }
