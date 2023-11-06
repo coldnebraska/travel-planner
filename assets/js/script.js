@@ -325,3 +325,29 @@ function hideButton(id) {
 
   localStorage.setItem("savedTrips", JSON.stringify(savedItems))
 }
+
+const modal = document.getElementById("myModal");
+const getStartedButton = document.getElementById("getStartedButton");
+getStartedButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    modal.style.display= "none";
+});
+
+$(document).ready(function () {
+  var doc = new jsPDF();
+  var specialElementHandlers = {
+      '#save-btn': function (element, renderer) {
+          return true;
+      }
+  };
+
+  $('#cmd').click(function () {
+      console.log("Button clicked");
+      doc.fromHTML($('#content').html(), 15, 15, {
+          'width': 170,
+          'elementHandlers': specialElementHandlers
+      });
+      doc.save('travel-planner.pdf');
+  });
+});
+

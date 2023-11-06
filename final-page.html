@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trip Results</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./assets/css/final-page.css">
 </head>
 
@@ -18,7 +20,7 @@
             <img class="w-20 h-20" src="./assets/images/travel-image.jpg">
         </section>    
 
-    <div class="container mx-auto p-4 flex flex-col min-h-screen">
+    <div id="content" class="container mx-auto p-4 flex flex-col min-h-screen">
         <div>
             <h1 class="text-3xl font-bold">Flight Details</h1>
             <!-- insert flight details here -->
@@ -31,14 +33,16 @@
         
         <div class="flex-grow"></div> <!-- extra div to add space in middle of page -->
         
-        <div>
+        <div id="save-btn">
             <h1 class="text-3xl font-bold text-center font-bold flex justify-left items-center h-20">Save Trip Details</h1>
-            <button class="bg-blue-500 text-white py-2 px-4 rounded mr-4">Save this trip</button>
-            <button class="bg-green-500 text-white py-2 px-4 rounded mr-4">Print this trip</button>
-            <button class="bg-red-500 text-white py-2 px-4 rounded ">Email me this trip</button>
+            <button id="cmd" class="bg-blue-500 text-white py-2 px-4 rounded mr-4">Save as PDF</button>
+            <button id="search-again" class="bg-green-500 text-white py-2 px-4 rounded mr-4">
+                <a href="flight.html">Search Again</a>
+            </button>
         </div>
     </div>
-    
+
+    <script src="./assets/js/script.js"></script>
     
 </body>
 </html>
