@@ -40,6 +40,14 @@
             <button id="getStartedButton"></button>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function finalPageLoad() {
+                let savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
+                renderFlight()
+            }
+            window.onload = finalPageLoad
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>

@@ -7,7 +7,7 @@ This project was to help us learn how to work together in a small team and build
 
 
 ## Screenshots
-
+![Alt text](./assets/images/readme_screenshot.png)
 
 ## Live Application
 The link to the live application of the webpage is: https://gyerkes.github.io/travel-planner/

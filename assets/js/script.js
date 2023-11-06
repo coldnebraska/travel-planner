@@ -20,7 +20,7 @@ const savedItems = {
   flight: {
     departure: "",
     arrival: "",
-    return: "",
+    returnDeparture: "",
     returnArrival: "",
     airline: "",
     cost: "",
@@ -338,7 +338,7 @@ function flightSearch() {
       savedItems.flight.returnAirport = flights.returnCity[id]
       console.log(savedItems)
       localStorage.setItem("savedTrips", JSON.stringify(savedItems))
-      window.location.href = "page2.html"
+      window.location.href = "hotel-search.html"
     })
   })
 }
@@ -347,7 +347,7 @@ function createHotelList(data) {
   const hotelList = $("#results-list") // !jquery to the hotel list div
   for (i = 0; i < data.data.length; i++) {
     const createDiv = document.createElement("div")
-    const createHeader = document.createElement("h1")
+    const createHeader = document.createElement("h3")
     const createPara = document.createElement("p")
     const createStar = document.createElement("p")
     const saveButton = document.createElement("button")
@@ -408,15 +408,21 @@ function hideButton(id) {
   $(".saved").css("font-style", "italic")
 
   const savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
-  savedTrips.hotel.push(savedItems.hotel[hotelIndex])
+  // console.log(savedTrips)
+  savedTrips.hotel.push(hotel.name[id])
   localStorage.setItem("savedTrips", JSON.stringify(savedTrips))
-  hotelIndex += 1
 }
 
 const modal = document.getElementById("myModal");
+const card = $(".card")
+const wrapper = $(".wrapper")
+const footer = $("footer")
 const getStartedButton = document.getElementById("getStartedButton");
 getStartedButton.addEventListener("click", (event) => {
   event.preventDefault();
+  card.css("display", "block")
+  wrapper.css("display", "flex")
+  footer.css("display", "block")
   modal.style.display= "none";
 });
 
@@ -424,19 +430,16 @@ function displayDestination() {
   let hotelDestination = $("#hotel-destination")
   const userDestination = JSON.parse(localStorage.getItem("userDestination"))
   console.log(userDestination)
-  const addPara = document.createElement("p")
+  const addPara = document.createElement("h2")
   addPara.textContent = userDestination[0] + ", " + userDestination[1]
   destinationCode = userDestination[2]
 
   hotelDestination.append(addPara)
 }
 
-
 const hotelSearchButton = $(".hotel-search-button")
 
 hotelSearchButton.click(hotelSearch)
-
-
 
 function renderFlight() {
   let flightData = JSON.parse(localStorage.getItem("savedTrips"));
