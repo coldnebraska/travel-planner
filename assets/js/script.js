@@ -288,7 +288,7 @@ function flightSearch() {
       flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
       flights.returnFlightNumber.push(data.data[i].itineraries[1].segments[0].number)
       flights.departCity.push(data.data[i].itineraries[0].segments[0].departure.iataCode)
-      flights.returnCity.push(data.data[i].itineraries[0].segments[1].arrival.iataCode)
+      flights.returnCity.push(data.data[i].itineraries[0].segments[0].arrival.iataCode)
       flights.cost.push(data.data[i].price.total)
       flights.numPassengers.push(data.data[i].travelerPricings.length)
 
@@ -442,13 +442,22 @@ const hotelSearchButton = $(".hotel-search-button")
 hotelSearchButton.click(hotelSearch)
 
 function renderFlight() {
+  const hotelData = $(".hotelData")
   let flightData = JSON.parse(localStorage.getItem("savedTrips"));
+  
   if (flightData !== null) {
     document.getElementById("flightData").innerHTML = "Airline: " + flightData.flight.airline  + "<br>" + "Depart City: " + flightData.flight.departAirport + "<br>" +
     "Arrival City: " + flightData.flight.returnAirport + "<br>" + "Departure Date & Time: " + flightData.flight.departure + "<br>" + "Arrival Date & Time: " + flightData.flight.arrival + "<br>" + 
     "ReturnAirline: " + flightData.flight.airline + "<br>" + "Return Date & Time: " + flightData.flight.returnAirport + "<br>" + "Return Arrival Date & Time: " + flightData.flight.departAirport + "<br>" + "Return Flight Departure: " + 
     flightData.flight.returnDepart + "<br>" + "Return Flight Arrival: " + flightData.flight.returnArrival + "<br>" + 
     "Passengers: " + flightData.flight.passengers + "<br>" + "Flight Cost: " + "$" + flightData.flight.cost + " USD"
+    
+    if (flightData.hotel.length > 0) {
+      for (i = 0; i < flightData.hotel.length; i++) {
+        const createHotel = document.createElement("p")
+        createHotel.textContent = flightData.hotel[i]
+        hotelData.append(createHotel)
+      }
+    }
   }
 }
-renderFlight()
