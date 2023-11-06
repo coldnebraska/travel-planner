@@ -51,12 +51,12 @@ main {
 .search-form {
     position: absolute; 
     top: 10%; 
-    left: 35%; 
+    left: 20%; 
     background-color: rgba(222, 226, 233, 0.8); 
     padding: 2rem;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 30vw;
+    width: 50%;
 }
 
 .content {
@@ -216,19 +216,29 @@ footer {
         width: 95%;
         font-size: small;
     }
-    
     .options button {
         height: 20px;
         font-size: xx-small;
         justify-content: center; 
-    
     }
 }
 
 @media screen and (max-width: 803px) {
+    .search-form {
+        width: 60%;
+    }
     .options button {
-        font-size: xx-small;
+        height: 13px;
+        width: 30px;
+        font-size: 6px;
+        justify-content: center;
+    }
+}
 
+@media screen and (max-width: 550px) {
+    .search-form {
+        left: 10%;
+        width: 80%;
     }
 }
 
@@ -245,17 +255,4 @@ footer {
         padding: 1px;
         top: 2px; 
     }
-
-@media screen and (max-width: 803px) {
-    .options button {
-        height: 13px;
-        width: 30px;
-        font-size: 6px;
-        justify-content: center;
-
-    }
-
 }
-
-
-
