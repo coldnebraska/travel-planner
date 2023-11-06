@@ -339,7 +339,6 @@ function flightSearch() {
       console.log(savedItems)
       localStorage.setItem("savedTrips", JSON.stringify(savedItems))
       window.location.href = "page2.html"
-      renderflight();
     })
   })
 }
