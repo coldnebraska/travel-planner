@@ -5,7 +5,7 @@ body, h1, h2, p {
 
 body {
     font-family: Arial, sans-serif;
-    background: url('./assets/plane-img.jpg') no-repeat center center fixed;
+    background: url('./assets/images/plane-img.jpg') no-repeat center center fixed;
     background-size: cover;
     margin: 0;
     padding: 0;
@@ -40,7 +40,7 @@ main {
     text-align: center;
     padding: 0;
     color: #fff;
-    height: 100vh;
+    height: 50vh;
     position: relative; 
 }
 
