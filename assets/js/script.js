@@ -448,7 +448,7 @@ function renderFlight() {
   if (flightData !== null) {
     document.getElementById("flightData").innerHTML = "Airline: " + flightData.flight.airline  + "<br>" + "Depart City: " + flightData.flight.departAirport + "<br>" +
     "Arrival City: " + flightData.flight.returnAirport + "<br>" + "Departure Date & Time: " + flightData.flight.departure + "<br>" + "Arrival Date & Time: " + flightData.flight.arrival + "<br>" + 
-    "ReturnAirline: " + flightData.flight.airline + "<br>" + "Return Date & Time: " + flightData.flight.returnAirport + "<br>" + "Return Arrival Date & Time: " + flightData.flight.departAirport + "<br>" + "Return Flight Departure: " + 
+    "Return Airline: " + flightData.flight.airline + "<br>" + "Return Date & Time: " + flightData.flight.returnAirport + "<br>" + "Return Arrival Date & Time: " + flightData.flight.departAirport + "<br>" + "Return Flight Departure: " + 
     flightData.flight.returnDepart + "<br>" + "Return Flight Arrival: " + flightData.flight.returnArrival + "<br>" + 
     "Passengers: " + flightData.flight.passengers + "<br>" + "Flight Cost: " + "$" + flightData.flight.cost + " USD"
     
