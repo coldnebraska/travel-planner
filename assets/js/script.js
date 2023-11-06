@@ -475,3 +475,29 @@ function displayPdf() {
   pdfWindow.document.write(flightData, hotelData)
   pdfWindow.print()
 }
+
+const modal = document.getElementById("myModal");
+const getStartedButton = document.getElementById("getStartedButton");
+getStartedButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    modal.style.display= "none";
+});
+
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#save-btn': function (element, renderer) {
+        return true;
+    }
+};
+
+$('#cmd').click(function () {
+    doc.fromHTML($('#content').html(), 15, 15, {
+        'width': 170,
+        'elementHandlers': specialElementHandlers
+    });
+    doc.save('travel-planner.pdf');
+});
+
+
+
+
