@@ -421,7 +421,7 @@ function displayDestination() {
   let hotelDestination = $("#hotel-destination")
   const userDestination = JSON.parse(localStorage.getItem("userDestination"))
   console.log(userDestination)
-  const addPara = document.createElement("p")
+  const addPara = document.createElement("h2")
   addPara.textContent = userDestination[0] + ", " + userDestination[1]
   destinationCode = userDestination[2]
 
@@ -433,8 +433,10 @@ const hotelSearchButton = $(".hotel-search-button")
 hotelSearchButton.click(hotelSearch)
 
 function renderFlight() {
-  let flightData = Json.parse(localStorage.getItem("saveTrips"));
+  let flightData = JSON.parse(localStorage.getItem("savedTrips"));
   if (flightData !== null) {
-    document.getElementById(".flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.returnDepature + flightData.returnArrival + flightData.passengers + flightData.cost
+    document.getElementById("flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.flight.returnDepature + flightData.flight.returnArrival + flightData.flight.passengers + flightData.flight.cost
   }
 }
+
+renderFlight()
