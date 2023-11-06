@@ -436,8 +436,18 @@ const hotelSearchButton = $(".hotel-search-button")
 hotelSearchButton.click(hotelSearch)
 
 function renderFlight() {
+  const hotelData = $(".hotelData")
   let flightData = JSON.parse(localStorage.getItem("savedTrips"));
+  
   if (flightData !== null) {
     document.getElementById("flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.flight.returnDeparture + flightData.flight.returnArrival + flightData.flight.passengers + flightData.flight.cost
+    
+    if (flightData.hotel.length > 0) {
+      for (i = 0; i < flightData.hotel.length; i++) {
+        const createHotel = document.createElement("p")
+        createHotel.textContent = flightData.hotel[i]
+        hotelData.append(createHotel)
+      }
+    }
   }
 }
