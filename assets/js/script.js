@@ -276,7 +276,7 @@ function flightSearch() {
       savedItems.flight.passengers = flights.numPassengers[id]
       console.log(savedItems)
       localStorage.setItem("savedTrips", JSON.stringify(savedItems))
-      window.location.href = "page2.html"
+      window.location.href = "hotel-search.html"
     })
   })
 }
