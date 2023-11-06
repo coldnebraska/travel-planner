@@ -20,7 +20,7 @@ const savedItems = {
   flight: {
     departure: "",
     arrival: "",
-    return: "",
+    returnDeparture: "",
     returnArrival: "",
     airline: "",
     cost: "",
@@ -341,7 +341,7 @@ function createHotelList(data) {
   const hotelList = $("#results-list") // !jquery to the hotel list div
   for (i = 0; i < data.data.length; i++) {
     const createDiv = document.createElement("div")
-    const createHeader = document.createElement("h1")
+    const createHeader = document.createElement("h3")
     const createPara = document.createElement("p")
     const createStar = document.createElement("p")
     const saveButton = document.createElement("button")
@@ -401,7 +401,10 @@ function hideButton(id) {
   hotelList.children().eq(id).append(createPara)
   $(".saved").css("font-style", "italic")
 
-  localStorage.setItem("savedTrips", JSON.stringify(savedItems))
+  const savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
+  // console.log(savedTrips)
+  savedTrips.hotel.push(hotel.name[id])
+  localStorage.setItem("savedTrips", JSON.stringify(savedTrips))
 }
 
 const modal = document.getElementById("myModal");
@@ -435,8 +438,6 @@ hotelSearchButton.click(hotelSearch)
 function renderFlight() {
   let flightData = JSON.parse(localStorage.getItem("savedTrips"));
   if (flightData !== null) {
-    document.getElementById("flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.flight.returnDepature + flightData.flight.returnArrival + flightData.flight.passengers + flightData.flight.cost
+    document.getElementById("flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.flight.returnDeparture + flightData.flight.returnArrival + flightData.flight.passengers + flightData.flight.cost
   }
 }
-
-renderFlight()
