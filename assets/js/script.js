@@ -203,6 +203,7 @@ function flightSearch() {
       let monthDepart = convertTimeDepart.getMonth();
       let dayDepart = convertTimeDepart.getDate();
       let yearDepart = convertTimeDepart.getFullYear();
+      monthDepart += 1
       let dateDepart = yearDepart + "-" + monthDepart + "-" + dayDepart + " ";
       let hoursDepart = convertTimeDepart.getHours();
       let minutesDepart = convertTimeDepart.getMinutes();
@@ -218,6 +219,7 @@ function flightSearch() {
       let monthArrival = convertTimeArrival.getMonth();
       let dayArrival = convertTimeArrival.getDate();
       let yearArrival = convertTimeArrival.getFullYear();
+      monthArrival += 1;
       let dateArrival = yearArrival + "-" + monthArrival + "-" + dayArrival + " ";
       let hoursArrival = convertTimeArrival.getHours();
       let minutesArrival = convertTimeArrival.getMinutes();
@@ -232,6 +234,7 @@ function flightSearch() {
       let monthReturnD = convertTimeReturnD.getMonth();
       let dayReturnD = convertTimeReturnD.getDate();
       let yearReturnD = convertTimeReturnD.getFullYear();
+      monthReturnD += 1;
       let dateReturnD = yearReturnD + "-" + monthReturnD + "-" + dayReturnD + " ";
       let hoursReturnD = convertTimeReturnD.getHours();
       let minutesReturnD = convertTimeReturnD.getMinutes();
@@ -246,6 +249,7 @@ function flightSearch() {
       let monthReturnA = convertTimeReturnA.getMonth();
       let dayReturnA = convertTimeReturnA.getDate();
       let yearReturnA = convertTimeReturnA.getFullYear();
+      monthReturnA += 1;
       let dateReturnA = yearReturnA + "-" + monthReturnA + "-" + dayReturnA + " ";
       let hoursReturnA = convertTimeReturnA.getHours();
       let minutesReturnA = convertTimeReturnA.getMinutes();
