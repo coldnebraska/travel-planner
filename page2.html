@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Planner</title>
-    <link rel="stylesheet" href="assets/css/page2.css">
-</head>
-<header>
-    <h1>Your Next Adventure Awaits</h1>
-</header>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hotel Search</title>
+        <link rel="stylesheet" href="assets/css/page2.css">
+    </head>
 
-
-<body>
-    <div class="container">
-        <div class="input-group">
-            <label for="outgoing">Outgoing</label>
-            <input type="text" id="outgoing" name="outgoing" class="box" placeholder="Enter outgoing location">
+    <body>
+        <a href="final-page.html">Skip Hotel Searches</a>
+        <div class="container">
+            <div id="hotel-destination">
+                <h2>Destination</h2>
+            </div>
+            <a href="final-page.html">Next</a>
+            <div class="hotel-search">
+                <input class="user-radius" placeholder="Distance (mi)" required>
+                <button class="hotel-search-button">Search for Hotels</button>
+            </div>
         </div>
-        
-        
-        <div class="input-group">
-            <label for="destination">Destination</label>
-            <input type="text" id="destination" name="destination" class="box" placeholder="Enter destination location">
-        </div>
-        
-    <div class="input-group">
-        <label for="passengers">Number of Passengers</label>
-        <input type="number" id="passengers" name="passengers" class="box" placeholder="Enter the number of passengers">
-    </div>
-    
-    
-    <div class="input-group">
-        <label for="outgoingDate">Outgoing Date</label>
-        <input type="date" id="outgoingDate" name="outgoingDate" class="box">
-    </div>
-    
-    
-    <div class="input-group">
-        <label for="returnDate">Return Date</label>
-        <input type="date" id="returnDate" name="returnDate" class="box">
-    </div>
-</div>
 
+        <div id="results-list"></div>
 
-<div class="result-container">
-    <button id="searchButton" class="button">Search</button>
-</div>
+        <button id="getStartedButton"></button>
 
-
-<div class="results">
-    <h2>Results</h2>
-    <div id="results-list"></div>
-</div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="assets/js/script.js"></script>
-</body>
-<div class="bottom-text">
-    <a href="#section1" class="button">Search for Hotels</a>
-</div>
+        <script type="text/javascript">
+            function setDestination() {
+                let savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
+                displayDestination()
+            }
+            window.onload = setDestination
+        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="assets/js/script.js"></script>
+    </body>
 </html>
