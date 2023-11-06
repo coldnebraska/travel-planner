@@ -1,0 +1,66 @@
+header{
+    text-align: center; 
+    color: black;
+}
+
+label {
+    color: black; 
+    display: block;
+    text-align: center; 
+    font-weight: bold;  
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+}
+   
+.box {
+    background-color:#FDFEFE;
+    flex: 1; 
+    max-width: 200px; 
+    margin: 5px; 
+    text-align: center; 
+    line-height: 40px; 
+    text-decoration: none; 
+    border-radius: 50px; 
+}
+
+.box::placeholder {
+    color: black; 
+}
+
+
+.result-container {
+    padding: -10px; 
+    color: blue;
+    margin: 20px 0; 
+    text-align: center; 
+}
+
+#searchButton {
+    background-color:#FDFEFE;
+    color: black;
+    height: 40px;
+    width: 125px;
+    border-radius: 50px;
+     font-size: 16px;
+}
+
+
+#searchButton:hover {
+    border: 1px solid ;
+    background-color: #772014;
+}
+
+
+body {
+    background-image: url('Hotel Project Picture - Copy.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 150%;
+   
+}
+
