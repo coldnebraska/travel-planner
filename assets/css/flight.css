@@ -210,3 +210,52 @@ footer {
     border-radius: 5px;
     padding: 5px;
 }
+
+@media screen and (max-width: 992px) {
+    .options {
+        width: 95%;
+        font-size: small;
+    }
+    
+    .options button {
+        height: 20px;
+        font-size: xx-small;
+        justify-content: center; 
+    
+    }
+}
+
+@media screen and (max-width: 803px) {
+    .options button {
+        font-size: xx-small;
+
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .search-form {
+        width: 95%;
+        left: 3px;
+    }
+    .options {
+        width: 86%;
+        font-size: 8px;
+        margin-left: 8px;
+        justify-content: center;
+        padding: 1px;
+        top: 2px; 
+    }
+
+@media screen and (max-width: 803px) {
+    .options button {
+        height: 13px;
+        width: 30px;
+        font-size: 6px;
+        justify-content: center;
+
+    }
+
+}
+
+
+
