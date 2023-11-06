@@ -1,5 +1,7 @@
 let token = ""
 let button = ""
+let destinationCode = ""
+let hotelIndex = 0
 const hotel = {
   outgoingIata: [],
   destinationIata: [],
@@ -10,7 +12,7 @@ const hotel = {
 const userInput = {
   city: "",
   region: "",
-  radius: 5 - 1 // !recommended 5 mi (prevent 100+ hotel list)
+  radius: "" // !recommended 5 mi (prevent 100+ hotel list)
 }
 
 const savedItems = {
@@ -59,6 +61,12 @@ function searchDestinationIataCode() {
   userInput.city = $("#destination-city")[0].value
   userInput.region = $("#destination-state")[0].value
 
+  userInput.city = userInput.city.replace(userInput.city[0], userInput.city[0].toUpperCase())
+  userInput.region = userInput.region.replace(userInput.region[0], userInput.region[0].toUpperCase())
+
+  let userDestinationString = [userInput.city, userInput.region]
+  localStorage.setItem("userDestination", JSON.stringify(userDestinationString))
+
   const requestUrl = "https://api.api-ninjas.com/v1/airports?city=" + userInput.city + "&region=" + userInput.region
   fetch(requestUrl, {
     method: "GET",
@@ -72,6 +80,8 @@ function searchDestinationIataCode() {
       for (i = 0; i < data.length; i++) {
         if (data[i].iata != "") {
           hotel.destinationIata.push(data[i].iata)
+          userDestinationString.push(data[i].iata)
+          localStorage.setItem("userDestination", JSON.stringify(userDestinationString))
         }
       }
       getHotelToken()
@@ -106,32 +116,44 @@ function getHotelToken() {
     })
     .then(function (data) {
       token = data.access_token
-      hotelSearch()
       flightSearch()
     })
 }
 
 function hotelSearch() {
-  let iataCode = hotel.destinationIata[index]
-  const hotelUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + iataCode + "&radius=" + userInput.radius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
-  fetch(hotelUrl, {
-    method: "GET",
-    headers: { 'Authorization': 'Bearer ' + token }
+  const requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
+  fetch(requestTokenURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'grant_type=client_credentials&client_id=guryqLQUIRoKA4EyXNaj5uAeyAG1pG22&client_secret=byRpyX39LG4bx9Ap'
   })
     .then(function (response) {
       return response.json()
     })
     .then(function (data) {
-      console.log(data)
-      createHotelList(data)
-    })
-    .catch(error => {
-      if (iataCode != undefined) {
-        index += 1
-        hotelSearch()
-      } else {
-        $(".error-msg").css("display", "block")
-      }
+      token = data.access_token
+      let iataCode = destinationCode
+      userInput.radius = $(".user-radius").val() - 1
+      const hotelUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + iataCode + "&radius=" + userInput.radius + "&radiusUnit=MILE" + "&ratings=5,4,3,2"
+      fetch(hotelUrl, {
+        method: "GET",
+        headers: { 'Authorization': 'Bearer ' + token }
+      })
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (data) {
+          console.log(data)
+          createHotelList(data)
+        })
+        .catch(error => {
+          if (iataCode != undefined) {
+            index += 1
+            hotelSearch()
+          } else {
+            $(".error-msg").css("display", "block")
+          }
+        })
     })
 }
 
@@ -370,7 +392,7 @@ function createHotelList(data) {
 }
 
 function hideButton(id) {
-  const hotelList = $(".results-list")
+  const hotelList = $("#results-list")
   const createPara = document.createElement("p")
 
   document.getElementById(id).style.display = "none"
