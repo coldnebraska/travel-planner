@@ -333,21 +333,21 @@ getStartedButton.addEventListener("click", (event) => {
     modal.style.display= "none";
 });
 
-$(document).ready(function () {
-  var doc = new jsPDF();
-  var specialElementHandlers = {
-      '#save-btn': function (element, renderer) {
-          return true;
-      }
-  };
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#save-btn': function (element, renderer) {
+        return true;
+    }
+};
 
-  $('#cmd').click(function () {
-      console.log("Button clicked");
-      doc.fromHTML($('#content').html(), 15, 15, {
-          'width': 170,
-          'elementHandlers': specialElementHandlers
-      });
-      doc.save('travel-planner.pdf');
-  });
+$('#cmd').click(function () {
+    doc.fromHTML($('#content').html(), 15, 15, {
+        'width': 170,
+        'elementHandlers': specialElementHandlers
+    });
+    doc.save('travel-planner.pdf');
 });
+
+
+
 
