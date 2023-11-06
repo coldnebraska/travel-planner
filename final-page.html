@@ -19,25 +19,20 @@
         </section>    
 
     <div class="container mx-auto p-4 flex flex-col min-h-screen">
-        <div>
-            <h1 class="text-3xl font-bold">Flight Details</h1>
-            <!-- insert flight details here -->
+        <div class="flight-data">
+            <h1 class="text-3xl font-bold">Flight Information:</h1>
             <p id="flightData"></p>
         </div>
         
-        <div class="hotelData">
-            <h1 class="text-3xl font-bold">Hotel Details</h1>
-            <!-- insert hotel details here -->
-            <p id="hotelData"></p>
+        <div class="hotel-data">
+            <h1 class="text-3xl font-bold">Selected Hotels:</h1>
+            <p></p>
         </div>
         
-        <div class="flex-grow"></div> <!-- extra div to add space in middle of page -->
-        
         <div>
-            <h1 class="text-3xl font-bold text-center font-bold flex justify-left items-center h-20">Save Trip Details</h1>
-            <button class="bg-blue-500 text-white py-2 px-4 rounded mr-4">Save this trip</button>
-            <button class="bg-green-500 text-white py-2 px-4 rounded mr-4">Print this trip</button>
-            <button class="bg-red-500 text-white py-2 px-4 rounded ">Email me this trip</button>
+            <h1 class="text-3xl font-bold text-center font-bold flex justify-left items-center h-20">Save Your Trip</h1>
+            <button id="pdf-button" class="bg-blue-500 text-white py-2 px-4 rounded mr-4">Open as PDF</button>
+            <button class="bg-red-500 text-white py-2 px-4 rounded">Email me this trip</button>
             <button id="getStartedButton"></button>
         </div>
     </div>
@@ -53,6 +48,3 @@
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
-
-
-

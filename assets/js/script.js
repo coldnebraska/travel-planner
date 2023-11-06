@@ -442,7 +442,7 @@ const hotelSearchButton = $(".hotel-search-button")
 hotelSearchButton.click(hotelSearch)
 
 function renderFlight() {
-  const hotelData = $(".hotelData")
+  const hotelData = $(".hotel-data")
   let flightData = JSON.parse(localStorage.getItem("savedTrips"));
   
   if (flightData !== null) {
@@ -464,4 +464,14 @@ function renderFlight() {
       hotelData.append(createHotel)
     }
   }
+  let pdfButton = $("#pdf-button")
+  pdfButton.click(displayPdf)
+}
+
+function displayPdf() {
+  const flightData = $(".flight-data").html()
+  const hotelData = $(".hotel-data").html()
+  let pdfWindow = window.open("", "", "height=400, width=800")
+  pdfWindow.document.write(flightData, hotelData)
+  pdfWindow.print()
 }
