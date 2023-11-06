@@ -110,7 +110,9 @@ button[type="submit"]:hover {
     background-color: #555;
 }
 
-.card 
+#getStartedButton {
+    display: none;
+}
 
 footer {
     background-color: #333;

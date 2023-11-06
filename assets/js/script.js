@@ -102,7 +102,9 @@ let flights = {
   departFlightNumber: [],
   returnFlightNumber: [],
   numPassengers: [],
-  cost: []
+  cost: [],
+  departCity: [],
+  returnCity: []
 }
 function getHotelToken() {
   const requestTokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token"
@@ -285,6 +287,8 @@ function flightSearch() {
       flights.returnAirline.push(data.data[i].itineraries[1].segments[0].carrierCode)
       flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
       flights.returnFlightNumber.push(data.data[i].itineraries[1].segments[0].number)
+      flights.departCity.push(data.data[i].itineraries[0].segments[0].departure.iataCode)
+      flights.returnCity.push(data.data[i].itineraries[0].segments[1].arrival.iataCode)
       flights.cost.push(data.data[i].price.total)
       flights.numPassengers.push(data.data[i].travelerPricings.length)
 
@@ -325,14 +329,17 @@ function flightSearch() {
       let id = this.id
       savedItems.flight.departure = flights.departTime[id]
       savedItems.flight.arrival = flights.arrivalTime[id]
-      savedItems.flight.returnDeparture = flights.returnDepartTime[id]
+      savedItems.flight.returnDepart = flights.returnDepartTime[id]
       savedItems.flight.returnArrival = flights.returnArrivalTime[id]
       savedItems.flight.airline = flights.departAirline[id]
       savedItems.flight.cost = flights.cost[id]
       savedItems.flight.passengers = flights.numPassengers[id]
+      savedItems.flight.departAirport = flights.departCity[id]
+      savedItems.flight.returnAirport = flights.returnCity[id]
       console.log(savedItems)
       localStorage.setItem("savedTrips", JSON.stringify(savedItems))
       window.location.href = "page2.html"
+      renderflight();
     })
   })
 }
@@ -401,12 +408,45 @@ function hideButton(id) {
   hotelList.children().eq(id).append(createPara)
   $(".saved").css("font-style", "italic")
 
-  localStorage.setItem("savedTrips", JSON.stringify(savedItems))
+  const savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
+  savedTrips.hotel.push(savedItems.hotel[hotelIndex])
+  localStorage.setItem("savedTrips", JSON.stringify(savedTrips))
+  hotelIndex += 1
 }
 
+const modal = document.getElementById("myModal");
+const getStartedButton = document.getElementById("getStartedButton");
+getStartedButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  modal.style.display= "none";
+});
+
+function displayDestination() {
+  let hotelDestination = $("#hotel-destination")
+  const userDestination = JSON.parse(localStorage.getItem("userDestination"))
+  console.log(userDestination)
+  const addPara = document.createElement("p")
+  addPara.textContent = userDestination[0] + ", " + userDestination[1]
+  destinationCode = userDestination[2]
+
+  hotelDestination.append(addPara)
+}
+
+
+const hotelSearchButton = $(".hotel-search-button")
+
+hotelSearchButton.click(hotelSearch)
+
+
+
 function renderFlight() {
-  let flightData = Json.parse(localStorage.getItem("saveTrips"));
+  let flightData = JSON.parse(localStorage.getItem("savedTrips"));
   if (flightData !== null) {
-    document.getElementById(".flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.returnDepature + flightData.returnArrival + flightData.passengers + flightData.cost
+    document.getElementById("flightData").innerHTML = "Airline: " + flightData.flight.airline  + "<br>" + "Depart City: " + flightData.flight.departAirport + "<br>" +
+    "Arrival City: " + flightData.flight.returnAirport + "<br>" + "Departure Date & Time: " + flightData.flight.departure + "<br>" + "Arrival Date & Time: " + flightData.flight.arrival + "<br>" + 
+    "ReturnAirline: " + flightData.flight.airline + "<br>" + "Return Date & Time: " + flightData.flight.returnAirport + "<br>" + "Return Arrival Date & Time: " + flightData.flight.departAirport + "<br>" + "Return Flight Departure: " + 
+    flightData.flight.returnDepart + "<br>" + "Return Flight Arrival: " + flightData.flight.returnArrival + "<br>" + 
+    "Passengers: " + flightData.flight.passengers + "<br>" + "Flight Cost: " + "$" + flightData.flight.cost + " USD"
   }
 }
+renderFlight()
