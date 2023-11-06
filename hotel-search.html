@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hotel Search</title>
+        <link rel="stylesheet" href="assets/css/hotel-search.css">
+    </head>
+
+    <body>
+        <a class="skip" href="final-page.html">Skip Hotel Search</a>
+        <div class="container">
+            <div id="hotel-destination">
+                <h1>Your Destination:</h1>
+            </div>
+            <a class="next" href="final-page.html">Next</a>
+        </div>
+        <div class="hotel-search">
+            <h3>Radius from Destination Airport:</h3>
+            <input class="user-radius" placeholder="Distance (mi)" required>
+            <button class="hotel-search-button">Search for Hotels</button>
+        </div>
+
+        <div id="results-list"></div>
+
+        <button id="getStartedButton"></button>
+
+        <script type="text/javascript">
+            function setDestination() {
+                let savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
+                displayDestination()
+            }
+            window.onload = setDestination
+        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="assets/js/script.js"></script>
+    </body>
+</html>
