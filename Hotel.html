@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner</title>
+    <link rel="stylesheet" href="assets/css/Hotel.css">
+    <script src="assets/js/script.js"></script>
+</head>
+<header>
+    <h1>Your Next Adventure Awaits</h1>
+</header>
+
+<body>
+<div class="container">
+    <div class="input-group">
+        <label for="outgoing">Check in Date</label>
+        <input type="text" id="Checkin" name="Checkin" class="box" placeholder="Enter Check in date">
+    </div>
+
+    <div class="input-group">
+        <label for="destination">Destination</label>
+        <input type="text" id="destination" name="destination" class="box" placeholder="Enter destination location">
+    </div>
+   
+    <div class="input-group">
+        <label for="passengers">Number of Guest</label>
+        <input type="number" id="Guest" name="Guest" class="box" placeholder="Enter Number of Guest">
+    </div>
+
+    <div class="input-group">
+        <label for="outgoingDate">Check out Date</label>
+        <input type="date" id="Checkout" name="Checkout" class="box">
+   </div>
+</div>
+
+    <div class="result-container">
+        <button id="searchButton" class="button">Search</button>
+    </div>
+
+    <div class="results">
+        <h2>Results</h2>
+        <ul id="resultsList"></ul>
+    </div>
+   
+</body>
+</div>
+</html>
+
+
+
