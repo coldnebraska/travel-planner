@@ -332,7 +332,7 @@ function flightSearch() {
       savedItems.flight.passengers = flights.numPassengers[id]
       console.log(savedItems)
       localStorage.setItem("savedTrips", JSON.stringify(savedItems))
-      window.location.href = "page2.html"
+      window.location.href = "hotel-search.html"
     })
   })
 }
@@ -403,6 +403,34 @@ function hideButton(id) {
 
   localStorage.setItem("savedTrips", JSON.stringify(savedItems))
 }
+
+const modal = document.getElementById("myModal");
+const card = $(".card")
+const wrapper = $(".wrapper")
+const footer = $("footer")
+const getStartedButton = document.getElementById("getStartedButton");
+getStartedButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  card.css("display", "block")
+  wrapper.css("display", "flex")
+  footer.css("display", "block")
+  modal.style.display= "none";
+});
+
+function displayDestination() {
+  let hotelDestination = $("#hotel-destination")
+  const userDestination = JSON.parse(localStorage.getItem("userDestination"))
+  console.log(userDestination)
+  const addPara = document.createElement("p")
+  addPara.textContent = userDestination[0] + ", " + userDestination[1]
+  destinationCode = userDestination[2]
+
+  hotelDestination.append(addPara)
+}
+
+const hotelSearchButton = $(".hotel-search-button")
+
+hotelSearchButton.click(hotelSearch)
 
 function renderFlight() {
   let flightData = Json.parse(localStorage.getItem("saveTrips"));
