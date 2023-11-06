@@ -18,7 +18,7 @@ header {
 }
 
 .wrapper {
-    display: flex;
+    display: none;
     flex-direction: column;
     min-height: 100vh;
     padding: 0;
@@ -114,6 +114,7 @@ button[type="submit"]:hover {
 }
 
 .card {
+    display: none;
     margin: 0;
     padding: 0;
 }
@@ -160,6 +161,7 @@ button[type="submit"]:hover {
 }
 
 footer {
+    display: none;
     background-color: #333;
     color: #fff;
     text-align: center;

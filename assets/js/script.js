@@ -352,9 +352,15 @@ function hideButton(id) {
 }
 
 const modal = document.getElementById("myModal");
+const card = $(".card")
+const wrapper = $(".wrapper")
+const footer = $("footer")
 const getStartedButton = document.getElementById("getStartedButton");
 getStartedButton.addEventListener("click", (event) => {
   event.preventDefault();
+  card.css("display", "block")
+  wrapper.css("display", "flex")
+  footer.css("display", "block")
   modal.style.display= "none";
 });
 
