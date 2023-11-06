@@ -172,7 +172,8 @@ function flightSearch() {
   let returnDate = $returnDateInput.val();
   let adult = $adultPassengerInput.val();
   
-  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=" + iataCodeDestination + "&departureDate=" + departDate + "&returnDate=" + returnDate + "&adults=" + adult
+  const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=" + iataCodeDestination + "&departureDate=" + departDate + "&returnDate=" + returnDate + "&adults=" + adult + "&nonStop=true&currencyCode=USD"
+  // using fetch to grab API search values
   fetch(flightUrl, {
     method: "GET",
     headers: { 'Authorization': 'Bearer ' + token }
@@ -191,6 +192,7 @@ function flightSearch() {
   .then(function (response) {
     return response.json()
   })
+  // assigning variabl to the IDs of the search form
   .then(function (data) {
     console.log(data)
     let departure = $(".departure")
@@ -202,7 +204,9 @@ function flightSearch() {
     let passengers = $(".passengers")
     let button = $(".select-flight")
 
-    for (i = 0;i < data.meta.count && i < 25; i++) {
+    // start of loop to iterate through the api
+    for (i = 0;i < data.meta.count; i++) {
+      // assinging constant variable to the elements created for the values parsed in the api
       const createDt = document.createElement("p")
       const createAt = document.createElement("p")
       const createRdt = document.createElement("p")
@@ -212,29 +216,79 @@ function flightSearch() {
       const createNp = document.createElement("p")
       const createButton = document.createElement("button")
 
+      
+      // values for depatrure date and time
       let departString = data.data[i].itineraries[0].segments[0].departure.at
       departString = departString.replace("T", " ")
-      flights.departTime.push(departString)
+      // converstion from 24 hour to 12 hour time format
+      let convertTimeDepart = new Date(departString)
+      let monthDepart = convertTimeDepart.getMonth();
+      let dayDepart = convertTimeDepart.getDate();
+      let yearDepart = convertTimeDepart.getFullYear();
+      monthDepart += 1
+      let dateDepart = yearDepart + "-" + monthDepart + "-" + dayDepart + " ";
+      let hoursDepart = convertTimeDepart.getHours();
+      let minutesDepart = convertTimeDepart.getMinutes();
+      let convertedTimeDepart = dateDepart + ((hoursDepart > 12) ? hoursDepart - 12 :hoursDepart)
+      convertedTimeDepart += ((minutesDepart < 10) ? ":00":":" + minutesDepart)
+      convertedTimeDepart += ((hoursDepart >= 12) ? " PM":" AM")
+      flights.departTime.push(convertedTimeDepart)
 
       let arrivalString = data.data[i].itineraries[0].segments[0].arrival.at
       arrivalString = arrivalString.replace("T", " ")
-      flights.arrivalTime.push(arrivalString)
+      // console.log(arrivalString)
+      let convertTimeArrival = new Date(arrivalString)
+      let monthArrival = convertTimeArrival.getMonth();
+      let dayArrival = convertTimeArrival.getDate();
+      let yearArrival = convertTimeArrival.getFullYear();
+      monthArrival += 1;
+      let dateArrival = yearArrival + "-" + monthArrival + "-" + dayArrival + " ";
+      let hoursArrival = convertTimeArrival.getHours();
+      let minutesArrival = convertTimeArrival.getMinutes();
+      let convertedTimeArrival = dateArrival + ((hoursArrival > 12) ? hoursArrival - 12 :hoursArrival)
+      convertedTimeArrival += ((minutesArrival< 10) ? ":00":":" + minutesArrival)
+      convertedTimeArrival += ((hoursArrival >= 12) ? " PM":" AM")
+      flights.arrivalTime.push(convertedTimeArrival)
 
-      let returnDepartString = data.data[i].itineraries[0].segments[0].departure.at
+      let returnDepartString = data.data[i].itineraries[1].segments[0].departure.at
       returnDepartString = returnDepartString.replace("T", " ")
-      flights.returnDepartTime.push(returnDepartString)
+      let convertTimeReturnD = new Date(returnDepartString)
+      let monthReturnD = convertTimeReturnD.getMonth();
+      let dayReturnD = convertTimeReturnD.getDate();
+      let yearReturnD = convertTimeReturnD.getFullYear();
+      monthReturnD += 1;
+      let dateReturnD = yearReturnD + "-" + monthReturnD + "-" + dayReturnD + " ";
+      let hoursReturnD = convertTimeReturnD.getHours();
+      let minutesReturnD = convertTimeReturnD.getMinutes();
+      let convertedTimeReturnD = dateReturnD + ((hoursReturnD > 12) ? hoursReturnD - 12 :hoursReturnD)
+      convertedTimeReturnD += ((minutesReturnD< 10) ? ":00":":" + minutesReturnD)
+      convertedTimeReturnD += ((hoursReturnD >= 12) ? " PM":" AM")
+      flights.returnDepartTime.push(convertedTimeReturnD)
 
-      let returnArrivalString = data.data[i].itineraries[0].segments[0].arrival.at
+      let returnArrivalString = data.data[i].itineraries[1].segments[0].arrival.at
       returnArrivalString = returnArrivalString.replace("T", " ")
-      flights.returnArrivalTime.push(returnArrivalString)
+      let convertTimeReturnA = new Date(returnArrivalString)
+      let monthReturnA = convertTimeReturnA.getMonth();
+      let dayReturnA = convertTimeReturnA.getDate();
+      let yearReturnA = convertTimeReturnA.getFullYear();
+      monthReturnA += 1;
+      let dateReturnA = yearReturnA + "-" + monthReturnA + "-" + dayReturnA + " ";
+      let hoursReturnA = convertTimeReturnA.getHours();
+      let minutesReturnA = convertTimeReturnA.getMinutes();
+      let convertedTimeReturnA = dateReturnA + ((hoursReturnA > 12) ? hoursReturnA - 12 :hoursReturnA)
+      convertedTimeReturnA += ((minutesReturnA< 10) ? ":00":":" + minutesReturnA)
+      convertedTimeReturnA += ((hoursReturnA >= 12) ? " PM":" AM")
+      flights.returnArrivalTime.push(convertedTimeReturnA)
 
+      // values for rest of parsed data
       flights.departAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
-      flights.returnAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
+      flights.returnAirline.push(data.data[i].itineraries[1].segments[0].carrierCode)
       flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
-      flights.returnFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
+      flights.returnFlightNumber.push(data.data[i].itineraries[1].segments[0].number)
       flights.cost.push(data.data[i].price.total)
       flights.numPassengers.push(data.data[i].travelerPricings.length)
 
+      // make the values text and appending to the created element
       createDt.textContent = flights.departTime[i]
       departure.append(createDt)
 
@@ -261,15 +315,17 @@ function flightSearch() {
       button.append(createButton)
     }
 
+    // if statement for error handling if flight are not available
     if (data.data.length === 0) {
       $(".error-msg2").css("display", "block")
     }
 
+    // function for clicking search button, save values to local storage, continue to hotel html page
     $("button[id]").click(function () {
       let id = this.id
       savedItems.flight.departure = flights.departTime[id]
       savedItems.flight.arrival = flights.arrivalTime[id]
-      savedItems.flight.return = flights.returnDepartTime[id]
+      savedItems.flight.returnDeparture = flights.returnDepartTime[id]
       savedItems.flight.returnArrival = flights.returnArrivalTime[id]
       savedItems.flight.airline = flights.departAirline[id]
       savedItems.flight.cost = flights.cost[id]
@@ -345,10 +401,7 @@ function hideButton(id) {
   hotelList.children().eq(id).append(createPara)
   $(".saved").css("font-style", "italic")
 
-  const savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
-  savedTrips.hotel.push(savedItems.hotel[hotelIndex])
-  localStorage.setItem("savedTrips", JSON.stringify(savedTrips))
-  hotelIndex += 1
+  localStorage.setItem("savedTrips", JSON.stringify(savedItems))
 }
 
 const modal = document.getElementById("myModal");
@@ -378,3 +431,10 @@ function displayDestination() {
 const hotelSearchButton = $(".hotel-search-button")
 
 hotelSearchButton.click(hotelSearch)
+
+function renderFlight() {
+  let flightData = Json.parse(localStorage.getItem("saveTrips"));
+  if (flightData !== null) {
+    document.getElementById(".flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.returnDepature + flightData.returnArrival + flightData.passengers + flightData.cost
+  }
+}
