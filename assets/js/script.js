@@ -442,7 +442,7 @@ const hotelSearchButton = $(".hotel-search-button")
 hotelSearchButton.click(hotelSearch)
 
 function renderFlight() {
-  const hotelData = $(".hotelData")
+  const hotelData = $(".hotel-data")
   let flightData = JSON.parse(localStorage.getItem("savedTrips"));
   
   if (flightData !== null) {
