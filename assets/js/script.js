@@ -303,7 +303,7 @@ function flightSearch() {
       let id = this.id
       savedItems.flight.departure = flights.departTime[id]
       savedItems.flight.arrival = flights.arrivalTime[id]
-      savedItems.flight.return = flights.returnDepartTime[id]
+      savedItems.flight.returnDeparture = flights.returnDepartTime[id]
       savedItems.flight.returnArrival = flights.returnArrivalTime[id]
       savedItems.flight.airline = flights.departAirline[id]
       savedItems.flight.cost = flights.cost[id]
@@ -380,4 +380,11 @@ function hideButton(id) {
   $(".saved").css("font-style", "italic")
 
   localStorage.setItem("savedTrips", JSON.stringify(savedItems))
+}
+
+function renderFlight() {
+  let flightData = Json.parse(localStorage.getItem("saveTrips"));
+  if (flightData !== null) {
+    document.getElementById(".flightData").textContent = flightData.flight.airline + flightData.flight.departure + flightData.flight.arrival + flightData.returnDepature + flightData.returnArrival + flightData.passengers + flightData.cost
+  }
 }
