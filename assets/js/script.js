@@ -151,6 +151,7 @@ function flightSearch() {
   let adult = $adultPassengerInput.val();
   
   const flightUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + iataCode + "&destinationLocationCode=" + iataCodeDestination + "&departureDate=" + departDate + "&returnDate=" + returnDate + "&adults=" + adult + "&nonStop=true&currencyCode=USD"
+  // using fetch to grab API search values
   fetch(flightUrl, {
     method: "GET",
     headers: { 'Authorization': 'Bearer ' + token }
@@ -169,6 +170,7 @@ function flightSearch() {
   .then(function (response) {
     return response.json()
   })
+  // assigning variabl to the IDs of the search form
   .then(function (data) {
     console.log(data)
     let departure = $(".departure")
@@ -180,7 +182,9 @@ function flightSearch() {
     let passengers = $(".passengers")
     let button = $(".select-flight")
 
+    // start of loop to iterate through the api
     for (i = 0;i < data.meta.count; i++) {
+      // assinging constant variable to the elements created for the values parsed in the api
       const createDt = document.createElement("p")
       const createAt = document.createElement("p")
       const createRdt = document.createElement("p")
@@ -191,10 +195,10 @@ function flightSearch() {
       const createButton = document.createElement("button")
 
       
-
+      // values for depatrure date and time
       let departString = data.data[i].itineraries[0].segments[0].departure.at
       departString = departString.replace("T", " ")
-      // console.log(departString)
+      // converstion from 24 hour to 12 hour time format
       let convertTimeDepart = new Date(departString)
       let monthDepart = convertTimeDepart.getMonth();
       let dayDepart = convertTimeDepart.getDate();
@@ -250,6 +254,7 @@ function flightSearch() {
       convertedTimeReturnA += ((hoursReturnA >= 12) ? " PM":" AM")
       flights.returnArrivalTime.push(convertedTimeReturnA)
 
+      // values for rest of parsed data
       flights.departAirline.push(data.data[i].itineraries[0].segments[0].carrierCode)
       flights.returnAirline.push(data.data[i].itineraries[1].segments[0].carrierCode)
       flights.departFlightNumber.push(data.data[i].itineraries[0].segments[0].number)
@@ -257,6 +262,7 @@ function flightSearch() {
       flights.cost.push(data.data[i].price.total)
       flights.numPassengers.push(data.data[i].travelerPricings.length)
 
+      // make the values text and appending to the created element
       createDt.textContent = flights.departTime[i]
       departure.append(createDt)
 
@@ -283,10 +289,12 @@ function flightSearch() {
       button.append(createButton)
     }
 
+    // if statement for error handling if flight are not available
     if (data.data.length === 0) {
       $(".error-msg2").css("display", "block")
     }
 
+    // function for clicking search button, save values to local storage, continue to hotel html page
     $("button[id]").click(function () {
       let id = this.id
       savedItems.flight.departure = flights.departTime[id]
