@@ -1,3 +1,18 @@
+body {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    background-image: url(hotel.jpg);
+    background-position-y: -400px;
+    background-size: cover;
+}
+
 #getStartedButton {
     display: none;
 }
@@ -5,4 +20,67 @@
 .hotel-search {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.hotel-search input {
+    margin-bottom: 20px;
+}
+
+.skip {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+}
+
+.next {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+#hotel-destination {
+    text-align: center;
+}
+
+#hotel-destination h1 {
+    padding-top: 100px;
+    font-size: 40px;
+}
+
+a {
+    background-color: rgb(86, 86, 255);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: rgb(125, 125, 255);
+}
+
+button {
+    background-color: rgb(86, 86, 255);
+    border-radius: 5px;
+    color: white;
+    border: 1px solid grey;
+    padding: 5px;
+}
+
+#results-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    margin-top: 30px;
+}
+
+.hotel {
+    background-color: rgb(237, 237, 237);
+    border-radius: 10px;
+    padding: 10px;
+    width: 27%;
 }
