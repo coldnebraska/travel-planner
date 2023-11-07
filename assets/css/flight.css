@@ -51,7 +51,7 @@ main {
 .search-form {
     position: absolute; 
     top: 10%; 
-    left: 20%; 
+    left: 25%; 
     background-color: rgba(222, 226, 233, 0.8); 
     padding: 2rem;
     border-radius: 5px;
