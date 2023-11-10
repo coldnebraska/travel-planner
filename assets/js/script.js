@@ -111,7 +111,7 @@ function getHotelToken() {
   fetch(requestTokenURL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'grant_type=client_credentials&client_id=guryqLQUIRoKA4EyXNaj5uAeyAG1pG22&client_secret=byRpyX39LG4bx9Ap'
+    body: 'grant_type=client_credentials&client_id=pI0YHebSKVULtx1bQTk9ATlUjIWzZvzP&client_secret=mPJoKWoNuLGqkjjZ'
   })
     .then(function (response) {
       return response.json()
@@ -127,7 +127,7 @@ function hotelSearch() {
   fetch(requestTokenURL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'grant_type=client_credentials&client_id=guryqLQUIRoKA4EyXNaj5uAeyAG1pG22&client_secret=byRpyX39LG4bx9Ap'
+    body: 'grant_type=client_credentials&client_id=pI0YHebSKVULtx1bQTk9ATlUjIWzZvzP&client_secret=mPJoKWoNuLGqkjjZ'
   })
     .then(function (response) {
       return response.json()
